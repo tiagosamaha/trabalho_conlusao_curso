@@ -4,11 +4,13 @@ Neste capítulo e apresentada uma revisão de assuntos relacionados na literatur
 
 \section{Origem dos testes na indústria}
 
-Desde do início da indústria percebeu-se que os produtos precisam estar adequados a especificação, sem isso a produção é mais lenta e gera desperdícios, como adaptação, retrabalho e refugo. (colocar comparacao a dev de software)
+Desde do início da indústria percebeu-se que os produtos precisam estar adequados a especificação. Produtos que são terminados com inconformidades tornam a produção mais lenta, gerando desperdícios como adaptação, retrabalho e refugo. O mesmo ocorre no processo de desenvolvimento de software, onde cada requisito deve atender as especificações solicitadas pelo cliente, caso contrário poderá ter funcionalidades inadequadas ou desnecessárias, que levam aos mesmos problemas da indústria.
 
-No inicio da indústria se inspecionava o final da produção, a indústria ocidental evoluiu para fazer inspeções pro-ativas (no estoque) e estatísticas por período de tempo. Entretanto o tempo entre a geração do erro e sua identificação diminui a capacidade de identificação do problema e de sua solução.
+A solução utilizada no secúlo XX, foi a inspeção ao final da produção. A indústria ocidental evoluiu ao fazer inspeções proativas (no estoque) e estatísticas por período de tempo. Entretanto o tempo entre a geração do erro e sua identificação diminui a capacidade de identificação da causa raíz dos problemas e de sua solução (CARVALHO, 2010).
 
-Máquina de tear e identificação e  prevenção de falhas.
+Segundo HOLWEG (2007), em 1918 Sakichi Toyoda implantou em sua indústria de tecelagem uma máquina que verifica a linha de produção. Ao detectar anormalidades, como por exemplo a falta ou quebra da linha, a produção era parada e os operadores avisados, evitando assim a necessidade de operários para monitoramento da produção, e que o produto não atendesse a especificação. Desta maneira o tempo de identifição do problema é curto, evita vários problemas no processo de produção e aumenta as chances de análise e identificação das causas dos problemas.
+
+Entretanto, todo o conhecimento gerado na industria oriental passou desapercebido, sem publicações científicas, até a década de 90, quando se iniciaram pesquisas a este respeito. Sendo assim, até os dias de hoje, percebe-se grandes falhas em empreendimentos nas diversas formas de indústria, inclusive na indústria de software.
 
 \section{Prejuízos na indústria de software}
 
@@ -16,4 +18,96 @@ Software são desenvolvidos a mais de cinquenta anos e ainda tem grandes problem
 
 Desenvolver sistemas é caro, e o processo frequentemente sofre dificuldades com as metodologias adotadas, muitas delas não se adequam as atuais exigências do mercado. Por exemplo, o gerente do projeto e os desenvolvedores, devem estar sempre preparados para avaliar as demandas passadas pelos seus clientes (stakeholders) durante o processo de desenvolvimento do sistema. Na etapa de codificação, surgem constantes solicitações de modificações dos requisitos, os quais podem afetar o custo e a qualidade do software \cite{CERPA}.
 
-O maior problema no processo de desenvolvimento é a existência de falhas no sistema, principalmente as detectáveis e previsíveis. Porém, muitas organizações ainda não consideram que a prevenção e detecção de falhas através de testes seja importante, mesmo que possam correr o risco de causar prejuízos ao cliente \cite{CHARETTE}.
+O maior problema no processo de desenvolvimento é a existência de falhas no sistema, principalmente as detectáveis e previsíveis. Porém, muitas organizações ainda não consideram que a prevenção e detecção de falhas através de testes seja importante, mesmo que possam correr o risco de causar prejuízos ao cliente \cite{CHARETTE}. A tabela \ref{falhas_em_projetos} exemplifica tipos de falha em projetos de desenvolvimento de software é apresentada abaixo.
+
+\begin{table}[ht]
+	\centering
+	\fontsize{8}{0}
+	\caption{Percentual de projetos falhos por fator de falha}
+	\label{falhas_em_projetos}
+\begin{tabular}{lccc}
+
+\hline
+
+\textbf{Fatores de falha em projetos de software} & \multicolumn{3}{c}{\textbf{Porcentagem de projetos (\%)}}\tabularnewline
+
+\cline{2-4}
+
+& \textbf{In-House} & \textbf{Outsourced} & \textbf{Geral}\tabularnewline
+
+\hline
+
+Data de entrega influenciou no processo & 93,9 & 90,5 & 92,9\tabularnewline
+
+\hline
+
+Projeto estimado por baixo & 83,7 & 76,2 & 81,4\tabularnewline
+
+\hline
+
+Riscos não fora reavaliados, controlados ou gerenciados & 73,4 & 80,9 & 75,7\tabularnewline
+
+\hline
+
+A gerência não foi recompensada por longas horas de trabalho & 81,6 & 57,1 & 74,3\tabularnewline
+
+\hline
+
+Tomada de decisão foi feita sem informações necessárias & 83,7 & 47,6 & 72,9\tabularnewline
+
+\hline
+
+A gerência teve experiência desconfortável & 83,7 & 47,6 & 72,9\tabularnewline
+
+\hline
+
+Clientes não envolvidos na preparação do cronograma & 69,4 & 76,2 & 71,4\tabularnewline
+
+\hline
+
+Risco não está incorporado no planejamento do projeto & 65,3 & 80,9 & 70,0\tabularnewline
+
+\hline
+
+Controle de mudanças não monitorado/negociado efetivamente & 63,3 & 85,7 & 70,0\tabularnewline
+
+\hline
+
+Clientes e usuários tiveram espectativas não realísticas & 69,4 & 66,7 & 68,6\tabularnewline
+
+\hline
+
+Processo não teve revisões ao final de cada fase & 75,5 & 47,6 & 67,1\tabularnewline
+
+\hline
+
+Metodologia não apropriada para o projeto & 71,4 & 52,4 & 65,7\tabularnewline
+
+\hline
+
+Cronograma agressivo afetou a motivação da equipe & 69,4 & 57,1 & 65,7\tabularnewline
+
+\hline
+
+Mudanças no escopo durante o projeto & 67,3 & 57,1 & 64,3\tabularnewline
+
+\hline
+
+Cronograma teve efeito negativo na vida dos elementos da equipe & 71,4 & 42,9 & 62,9\tabularnewline
+
+\hline
+
+Projeto com equipe inadequada para cumprir o cronograma & 63,3 & 57,1 & 61,4\tabularnewline
+
+\hline
+
+Equipe adicionada tardiamente para cumprir um cronograma & 61,2 & 61,9 & 61,4\tabularnewline
+
+\hline
+
+Clientes não dão tempo suficiente para levantar requisitos & 61,2 & 57,1 & 60,0\tabularnewline
+
+\hline
+
+\end{tabular}
+\end{table}

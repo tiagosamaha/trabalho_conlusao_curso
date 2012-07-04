@@ -1,4 +1,5 @@
 *.lof
+*.lot
 *.fdb_latexmk
 *.pdf
 *.out
