@@ -14,7 +14,7 @@ Entretanto, todo o conhecimento gerado na industria oriental passou desapercebid
 
 \section{Prejuízos na indústria de software}
 
-Software são desenvolvidos a mais de cinquenta anos e ainda tem grandes problemas com a qualidade e garantia de entrega. Segundo \citeonline{CHARETTE}, bilhões de dólares são gastos em projetos  que não são terminados, e que 5\% a 15\% dos projetos iniciados serão abandonados antes de serem entregues ou considerados totalmente inadequados logo depois de seu término.
+Software são desenvolvidos a mais de cinquenta anos e ainda tem grandes problemas com a qualidade e garantia de entrega. Segundo \citeonline{CHARETTE}, bilhões de dólares são gastos em projetos  que não são terminados, e 5\% a 15\% dos projetos iniciados serão abandonados antes de serem entregues ou considerados totalmente inadequados logo depois de seu término.
 
 Desenvolver sistemas é caro, e o processo frequentemente sofre dificuldades com as metodologias adotadas, muitas delas não se adequam as atuais exigências do mercado. Por exemplo, o gerente do projeto e os desenvolvedores, devem estar sempre preparados para avaliar as demandas passadas pelos seus clientes (stakeholders) durante o processo de desenvolvimento do sistema. Na etapa de codificação, surgem constantes solicitações de modificações dos requisitos, os quais podem afetar o custo e a qualidade do software \cite{CERPA}.
 
@@ -111,3 +111,33 @@ Clientes não dão tempo suficiente para levantar requisitos & 61,2 & 57,1 & 60,
 
 \end{tabular}
 \end{table}
+
+\section{Filosofia de Teste de Software}
+
+Teste de software é uma das mais importantes atividades na garantia de qualidade. Segundo \citeonline{PRESSMAN}, a atividade de teste em um projeto de software pode consumir 40\% do esforço total do mesmo e chegar a custar de três a cinco vezes mais que todas as outras etapas da engenharia de software somadas.
+
+A definição comumente aceita da atividade de teste de software é a de que "teste de software consiste de uma série de procedimentos pré-definidos para garantir que o código faça o que ele foi projetado para fazer e não tenha nenhum comportamento não desejado". Porém, \citeonline{MYERS}, aponta para o fato de que o objetivo primário de um teste de software é encontrar erros no código e não provar que o programa atinge aos objetivos: "Teste de software é o processo de se executar um programa com o propósito de descobrir erros". 
+
+Muitos programadores assumem uma definição menos eficiente sobre a atividade de teste:
+
+\begin{itemize}
+\item A atividade de teste é o processo de demonstrar a inexistência de erros no software
+\end{itemize}
+
+Esse pensamento comum é inapropriado pois apesar da atividade de teste poder descobrir defeitos no software, ela é incapaz de mostrar a inexistência destes. No mundo real, é impraticável criar casos de teste para todas as combinações e cenários possíveis para aplicações mais complexas.
+
+\begin{itemize}
+\item O propósito da atividade de teste é mostrar que um programa executa suas funções corretamente.
+\end{itemize}
+
+Esta definição pode ser considerada incompleta pois mesmo que um programa atinja os objetivos para o qual foi projetado, ainda pode conter erros caso apresente funcionalidades adicionais.
+
+\begin{itemize}
+\item Teste de software é o processo de garantir que um programa faz o que foi projetado para fazer.
+\end{itemize}
+
+Apesar de uma atividade de teste bem executada poder demonstrar a conformidade entre os requisitos do cliente e as funcionalidades implementadas no software, este é um benefício secundário. Como qualquer outra atividade no processo de desenvolvimento, testes também devem agregar valor ao software, e portanto é importante encontrar defeitos. Neste sentido, a qualidade da atividade de teste será diretamente proporcial ao esforço em encontrar defeitos.
+
+Por tudo isso, percebe-se que os testes de software cumprem uma função ética no processo de desenvolvimento, evitando prejuízos para as organizações ou pessoas. Um exemplo claro disso, é a responsabilidade atribuída ao desenvolvedor do algoritmo presente em um marca-passo, onde qualquer falha pode causar graves prejuízos ao usuário.
+
+Portanto, para conduzir os testes efetivamente, existe toda uma complexidade advinda da variedade de algorítmos que precisarão ser testados. Várias técnicas propostas para endereçar os testes de algorítmos são apresentadas nos tópico a seguir.
