@@ -141,3 +141,54 @@ Apesar de uma atividade de teste bem executada poder demonstrar a conformidade e
 Por tudo isso, percebe-se que os testes de software cumprem uma função ética no processo de desenvolvimento, evitando prejuízos para as organizações ou pessoas. Um exemplo claro disso, é a responsabilidade atribuída ao desenvolvedor do algoritmo presente em um marca-passo, onde qualquer falha pode causar graves prejuízos ao usuário.
 
 Portanto, para conduzir os testes efetivamente, existe toda uma complexidade advinda da variedade de algorítmos que precisarão ser testados. Várias técnicas propostas para endereçar os testes de algorítmos são apresentadas nos tópico a seguir.
+
+\section{Tipos de testes de software}
+
+...
+
+\section{Formato \textit{YAML}}
+\label{sec:yaml}
+
+O \textit{YAML} é um formato de serialização de dados que pode ser facilmente entendível por humanos e ao mesmo tempo é flexível e facilmente manipulável. Ele aceita representação para as estruturas de listas, dicionários e valores simples, como texto e inteiros \cite{YAML}.
+
+Além disso, este formato utiliza uma notação baseada em indentação e um conjunto de caracteres para demarcar sua estrutura. Abaixo serão listadas algumas outras características deste formato.
+
+\begin{itemize}
+\item A estrutura do documento é composto por indentação com espaços em branco e não é permitido o uso de caracteres de tabulação para a indentação.
+
+\item Os valores simples não levam as aspas, mas podem ser incluídas as aspas duplas ou aspas simples.
+
+\item Os membros das listas são encabeçados por um traço nos títulos e com um membro em cada linha, ou entre colchetes e separados por uma vírgula e espaço.
+\end{itemize}
+
+O Código \ref{lst:codigo21} exemplifica as caracteristicas descritas anteriormente.
+
+{\singlespace
+\begin{lstlisting}[caption=Estrutura do código \textit{YAML},language=bash,label={lst:codigo21}]
+titulo: "Exemplo de listas"
+data: Julho de 2012
+
+listagem_1: [Tiago, Natanael]
+
+listagem_2:
+  - Tiago
+  - Natanael
+\end{lstlisting}
+}
+
+\section{jQuery}
+\label{sec:jquery}
+
+O \textit{jQuery} é uma popular biblioteca \textit{cross-browser} que facilita a implementação de diversas funcionalidades no \textit{client-side}, como manipulação de elementos, interações \textit{AJAX} e tratamento de eventos.
+
+\section{Amberjack}
+\label{sec:amberjack}
+
+O \textit{Amberjack2} é a segunda versão da biblioteca \textit{Amberjack} (http://amberjack.org/), o objetivo original desta ferramenta é a criação de \textit{tours} para sites, guiando o usuário através das páginas, exibindo pequenos textos descritivos enquanto aplica um efeito de realce no elemento em foco no contexto. Um exemplo do \textit{tour} gerado por esta biblioteca pode ser visto na Figura \ref{figura_22}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9 \textwidth]{figuras/figura_33}
+    \caption{\textit{Tour} gerado pela biblioteca \textit{Amberjack}}
+    \label{figura_22}
+\end{figure}

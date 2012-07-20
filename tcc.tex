@@ -30,6 +30,7 @@
   basicstyle=\footnotesize,
   stringstyle=\ttfamily,
   showstringspaces=false,
+  captionpos=b,
   %language=Java, %deve ser definida na inclusão de cada trecho de código, pois podem existir linguagens diferentes em exemplos diferentes
   breaklines=true,
   breakautoindent=true,
@@ -38,6 +39,8 @@
   commentstyle=\color{dkgreen},       % comment style
   stringstyle=\color{mauve},         % string literal style
   frame=single,                   % adds a frame around the code
+  extendedchars=\true,
+  inputencoding=utf8,
 }
 
 \setcounter{secnumdepth}{3} % Até três subsubsections numeradas
@@ -75,7 +78,6 @@
 \include{introducao} % Cria o capítulo 1
 \include{referencial_teorico} % Cria o capítulo 2
 \include{estudo_de_caso} % Cria o capítulo 3
-\include{resultados_discussao} % Cria o capítulo 4
-\include{conclusoes} % Cria o capítulo 5
+\include{conclusoes} % Cria o capítulo 4
 \bibliography{referencias} % Gera as referências bibliográficas
 \end{document} % Fim do TCC

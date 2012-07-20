@@ -1,7 +1,7 @@
 \chapter{ESTUDO DE CASO}
 Este capítulo apresenta um estudo de caso da implementação de uma ferramenta de documentação executável no projeto da Biblioteca Digital.
 
-O estudo de caso foi idealizado devido a necessidade de existir uma documentação que agregue mais valor ao cliente. Documentação executável pode validar requisitos e guiar o usuário no emprego do sistema.
+O estudo de caso foi idealizado visando comprovar as vantagens obtidas na produção e uso de documentação executável. Espera-se que o uso deste recurso no presente trabalho, traga como valores o apoio a validação de requisitos e maiores facilidades para treinamento de usuários no emprego do sistema.
 
 \section{Projeto da Biblioteca Digital} 	 	
 
@@ -214,7 +214,9 @@ monografia.autores.first.nome  # => 'Tiago'
 
 Com essa abordagem, foi possível criar uma estrutura simples de dicionários e listas para representar as classes \textit{Step} e \textit{MicroStep}, visto que essas classes eram pobres de lógica e serviam apenas para a estruturação e persistência de dados. Com essa estrutura foi possível fazer a simplificação da entrada de dados para o cadastro e gerenciamento dos cenários, usando o formato de serialização de dados \textit{YAML}.
 
-A vantagem de utilizar este formato é que ele pode ser facilmente entendível por humanos e ao mesmo tempo é flexível e facilmente manipulável. Ele aceita representação para as estruturas de listas, dicionários e valores simples, como texto e inteiros \cite{YAML}. Usando esse formato de entrada, o cadastro de um novo cenário pode ser feita como exemplificado no Código \ref{lst:codigo38}.
+A vantagem de utilizar este formato é que ele pode ser facilmente entendível por humanos e ao mesmo tempo é flexível e facilmente manipulável, conforme descrito no tópico \ref{sec:yaml}.
+
+Usando esse formato de entrada, o cadastro de um novo cenário pode ser descrito conforme exemplificado no Código \ref{lst:codigo38}.
 
 {\singlespace
 \begin{lstlisting}[caption=Exemplo de cenário escrito em \textit{YAML},label={lst:codigo38}]
@@ -258,3 +260,186 @@ contexts:
 \end{lstlisting}
 }
 
+\subsection{Funcionalidades desenvolvidas}
+
+Para a implementação do processo da execução do cenário, foi utilizado a linguagem \textit{JavaScript}, através das bibliotecas \textit{open-source: jQuery} (tópico \ref{sec:jquery}) e \textit{Amberjack2} (tópico \ref{sec:amberjack}).
+
+Durante o processo de desenvolvimento foi detectado um problema causado pela necessidade da passagem de parâmetros pela \textit{URL}, obrigatórios para que a biblioteca \textit{Amberjack} fosse corretamente inicializada. Esses parâmetros são facilmente repassados quando a troca de página se da por uma simples requisição \textit{GET} \cite{W3}, entretanto quando ela é resultante de redirecionamento vindo do servidor, esses parâmetros se perdem.
+
+Uma solução simples e eficaz para este problema foi o uso de \textit{cookies}. \textit{Cookies} são pequenas quantidades de informação que uma aplicação \textit{web} pode salvar no navegador, com o objetivo de recuperar posteriormente. 
+
+A seguir, são descritas as funcionalidades especificadas para a ferramenta NSI-BD-Tour.
+
+\textbf{F01.} Cadastro e gerenciamento de cenários usando \textit{YAML}
+
+O objetivo dessa funcionalidade é permitir o usuário descrever os cenários em uma linguagem simples - formato \textit{YAML}. O cenário descrito tem será utilizado para validar e guiar o usuário no emprego do sistema. Na implementação dessa funcionalidade, foi criado um cadastro de cenários, onde há um campo de texto em que o usuário pode descrever o cenário.
+
+Uma limitação desta funcionalidade ainda não abordada é a validação do formato do texto inserido pelo usuário. Caso o cenário inserido não atenda ao padrão, poderá comprometer o funcionamento da ferramenta.
+
+\textbf{F02.} Análise e extração de dados do \textit{YAML}
+
+O objetivo da análise e extração de dados do \textit{YAML} é obter os atributos do cenário, necessários para sua renderização no navegador.
+
+A biblioteca usada para o processo de extração foi a \textit{Psych} (https://github.com/tenderlove/psych). Essa biblioteca fornece uma maneira fácil de se transformar um texto em formato \textit{YAML} para uma estrutura nativa do \textit{Ruby} composta por dicionários, listas e valores simples. Um exemplo do uso da \textit{Pysch} pode ser visto no Código \ref{lst:codigo39}.
+
+{\singlespace
+\begin{lstlisting}[caption=Exemplo de utilização da bibliteca em \textit{Psych},label={lst:codigo39}]
+require "psych"
+
+yaml = <<-YAML
+  Livro:
+    titulo: 'Poignant Guide to Ruby'
+    autor: '_why'
+    tags:
+      - awesome
+      - ruby
+      - book
+YAML
+
+puts Psych.load(yaml)
+# => {"Livro"=>{"titulo"=>"Poignant Guide to Ruby", "autor"=>"_why", "tags"=>["awesome", "ruby", "book"]}}
+\end{lstlisting}
+}
+
+\textbf{F03.} Renderização do cenário
+
+A renderização do cenário tem como objetivo fornecer todos os dados necessários para que a biblioteca \textit{Amberjack2} possa criar e conduzir os cenários pré-cadastrados.
+Quando um usuário iniciar a execução de um cenário, seus atributos devem ser inseridos como código \textit{HTML} da página. Este código tem sua visualização oculta para usuário e é de uso interno da biblioteca. Ele deve obedecer um formato pré-especificado pelo \textit{Amberjack2}, como pode ser visto no Código \ref{lst:codigo40}.
+
+{\singlespace
+\begin{lstlisting}[caption=Cenário descrito em \textit{HTML} para biblioteca \textit{Amberjack2},language=HTML,label={lst:codigo40}]
+<div class="ajTourDef" id="1-tour-exemplo" style="display:none" title="/">
+  <div title="http://www.exemplo.com">
+    <div title="id:'elemento_id',padding:padding,trbl:'rmb'">
+      Aqui vai o texto do primeiro passo
+    </div>
+    <div title="id:'elemento_id',padding:padding,trbl:'rmb'">
+      Aqui vai o texto do segundo passo
+    </div>
+  </div>
+</div>
+
+\end{lstlisting}
+}
+
+\textbf{F04.} Gerenciar cenário em execução usando cookies
+
+O uso de \textit{cookies} foi necessário para contornar a necessidade da biblioteca \textit{Amberjack} de ter sempre os parâmetros de identificação do cenário na \textit{URL} corrente.
+A solução para este problema foi extender o \textit{Amberjack2}, adicionando o comportamento de manipular \textit{cookies}. Desta maneira, depois da primeira requisição \textit{GET} responsável por iniciar a execução de um cenário, os dados necessários pelo \textit{Amberjack2}, como o identificador do cenário e o tema visual escolhido, ficam persistidos no navegador, eliminando a necessidade da passagem de quaisquer parâmetros relativos ao cenário executado.
+
+\textbf{F05.} Simular a interação entre o usuário e a aplicação
+
+Um passo do cenário pode conter, além de um texto e um elemento indicativo, também uma ação representando a interação do usuário com a interface, como um clique ou um preenchimento de formulário. Estas funcionalidades precisam ser implementadas em \textit{JavaScript} para serem executadas no navegador do cliente.
+
+Foram criadas funções com o objetivo de simular as seguintes ações do usuário: clique, preenchimento de campo de texto, seleção de opções em \textit{checkboxes} e \textit{select}. O Código \ref{lst:codigo41} demonstra a implementação de uma dessas ações.
+
+{\singlespace
+\begin{lstlisting}[caption=Função para seleção de item em um \textit{select},language=bash,label={lst:codigo41}]
+select: function(element, value) {
+      select_element = $(element)[0]
+      $.each(select_element.options, function(index, option) {
+          if (option.text === value) {
+              select_element.selectedIndex = index;
+              $(element).change();
+              return;
+          }
+      })
+},
+\end{lstlisting}
+}
+
+Entretanto, este projeto ainda está em andamento, faltando ainda implementar a ação de escolha de um campo \textit{radio}.
+
+\section{Resultados e Discussão}
+
+Após o término da implementação da ferramenta NSI-BD-Tour, torna-se necessário representar suas possíveis aplicações. Neste tópico, pretende-se demonstrar como utilizá-la para validar a aplicação e guiar o treinamento do usuário em funcionalidades da Biblioteca Digital da EPCT.
+
+Será apresentado neste estudo, a validação da funcionalidade de Busca Avançada no acervo da Biblioteca Digital. Esta funcionalidade permite ao usuário consultar conteúdos através de atributos específicos, como título, autor, área, tipo e outros. Abaixo será demonstrada a utilização da ferramenta.
+
+Na Figura \ref{tour_1} pode-se observar a página inicial da Biblioteca Digital, onde onde existem vários portlets contendo funcionalidades do sistema, inclusive a Documentação Executável referente a ferramenta NSI-BD-Tours.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9 \textwidth]{figuras/tour_1}
+    \caption{Página incial do projeto Biblioteca Digital}
+    \label{tour_1}
+\end{figure}
+
+No portlet referente a documentação executável, pode-se visualizar os vários cenários existentes e a opção de gerenciá-los.
+
+\pagebreak
+Clicando sobre a opção “Gerenciar cenários”, conforme apresentado na Figura \ref{tour_2}, pode-se criar, alterar ou excluir cenários.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9 \textwidth]{figuras/tour_2}
+    \caption{Interface de gerenciamento de cenários}
+    \label{tour_2}
+\end{figure}
+
+Na Figura \ref{tour_3}, pode-se observar a criação de um novo cenário que terá o objetivo de validar a funcionalidade de Busca Avançada da BD.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9 \textwidth]{figuras/tour_3}
+    \caption{Criação de um novo cenário}
+    \label{tour_3}
+\end{figure}
+
+Nesta Figura, pode-se observar o campo “Descrição do Cenário”, onde foi inserido a descrição dos passos necessários para a execução do cenário, que precisa atender ao padrão YAML, conforme descrito no  tópico \ref{sec:yaml} do referencial teórico.
+
+Cabe ressaltar que a atual interface não critica o atendimento do padrão, sendo essa crítica do formato, uma funcionalidade prevista para  trabalhos futuros.
+
+Após a criação do cenário, o link para a execução do mesmo ficará disponível no portlet “Documentação Executável”. Ao clicar neste link, o usuário será redirecionado para a primeira página da funcionalidade avaliada pelo cenário que será então executado (Figura \ref{tour_4}).
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9 \textwidth]{figuras/tour_4}
+    \caption{Início da execução do cenário}
+    \label{tour_4}
+\end{figure}
+
+A execução dos cenários, conforme descrito neste trabalho, visa trazer ao usuário o entendimento e a validação das funcionalidades existentes no sistema. Como pode ser observado na Figura \ref{tour_4}, serão apresentados balões numerados e iluminados na interface do sistema, enquanto o restante da interface permanece obscurecida em segundo plano. Pode-se observar também, no canto superior esquerdo do balão, a numeração do passo sendo executado e a totalidade de passos do cenário. O usuário ainda pode retroceder ou avançar o passo atual através dos links em formato de seta para a esquerda e direita, respectivamente, que se encontram ao lado da numeração do passo.
+
+No canto superior direito, pode-se encontrar um link para a interrupção da execução do cenário, sinalizado por um “x”.
+
+A execução do cenário, é portanto, composta por vários passos sequenciais que precisam ser executados para que a funcionalidade seja avaliada. Em cada um destes passos, a ferramenta guia o usuário através das páginas do sistema, executando as ações necessárias para a demonstração da funcionalidade. Durante o tempo em que o cenário estiver em execução, os elementos da interface do sistema ficarão indisponíveis para a interação do usuário, que deverá usar os links oferecidos no balão do NSI-BD-Tour.
+
+Quando um passo, representado por um balão na interface, requer a execução de alguma ação interativa do usuário, um botão com o dizer “PRESSIONE PARA EXECUTAR” ficará disponível logo abaixo do texto descritivo do passo. Ao ser pressionado pelo usuário, esse botão simulará a ação descrita, executando automaticamente o passo, como por exemplo o clique de um link ou o preenchimento de um campo.
+
+Na Figura \ref{tour_5}, pode-se obervar a execução do passo 4, em que o preenchimento de um campo de texto é requerido pela funcionalidade e executado pela ferramenta.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9 \textwidth]{figuras/tour_5}
+    \caption{Execução do passo 4 do cenário “Busca Avançada”}
+    \label{tour_5}
+\end{figure}
+
+Após a execução da busca, é apresentado uma página com a listagem dos documentos recuperados pela mesma, como pode ser observado na Figura \ref{tour_6}. Neste caso, a Biblioteca Digital recuperou apenas um resultado, o documento “Documentação Executável”.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9 \textwidth]{figuras/tour_6}
+    \caption{Passo demonstrando a página de resultados da Busca Avançada}
+    \label{tour_6}
+\end{figure}
+
+\pagebreak
+
+Por fim, caso algum dos documentos retornados pela busca seja de interesse do usuário, ele pode abrir a página de visualização do documento (Figura \ref{tour_7}), onde além de informações mais detalhadas sobre o mesmo, outras funcionalidades são oferecidas, como por exemplo o download do documento ou possibilidade de favoritá-lo.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9 \textwidth]{figuras/tour_7}
+    \caption{Página de visualização do documento recuperado pela busca}
+    \label{tour_7}
+\end{figure}
+
+Conforme descrito na apresentação do uso da ferramenta, o usuário é conduzido em um processo previamente especificado na descrição do cenário, possibilitando o seu treinamento conforme esperado.
+
+As características da funcionalidade foram descritas, anunciadas ao usuário, possibilitando identificar detalhes de uma forma prática e interativa. Neste ponto, torna-se evidente a vantagem sobre a uma documentação tradicional, na qual as funcionalidades descritas podem não trazer ao leitor o real entendimento e experiência necessárias ao uso.
+
+Como a execução dos cenários utiliza o sistema real, neste caso a Biblioteca Digital, pode-se garantir que esta forma de documentação guarda um sincronismo com a implementação real do sistema superior a outras formas de documentação tradicionais que normalmente perdem sincronismo deixando o sistema legado.
+
+Adicionalmente, cada cenário descrito e executado pela ferramenta NSI-BD-Tour, está sendo validado no sentido real de teste de aceitação. Desta forma, quaisquer alterações que venham ser aplicadas no sistema, estarão sendo monitoradas e sinalizadas pela ferramenta. Este comportamento garante aos desenvolvedores e usuários, caso os cenários sejam executados com sucesso, que as funcionalidades cobertas por estes estejam em condições de uso.
