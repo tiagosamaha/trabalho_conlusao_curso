@@ -23,7 +23,7 @@ O maior problema no processo de desenvolvimento é a existência de falhas no si
 \begin{table}[ht]
 	\centering
 	\fontsize{8}{0}
-	\caption{Percentual de projetos falhos por fator de falha}
+	\caption{Percentual de projetos falhos por fator de falha \cite{CERPA}}
 	\label{falhas_em_projetos}
 \begin{tabular}{lccc}
 
@@ -176,15 +176,99 @@ listagem_2:
 \end{lstlisting}
 }
 
-\section{jQuery}
+
+\section{JavaScript}
+
+JavaScript (JS) surgiu em 1995, com o objetivo de validar a entrada de dados em páginas web, pois neste período nem todos os dados eram tratados pelo servidor. A capacidade de lidar com algumas validações básicas no cliente, era uma característica nova e excitante, num momento em que o uso de modems de telefone estava crescendo, e a lenta velocidade das conexões tornavam o acesso a web um exercício de paciência \cite{ZAKAS}.
+
+Segundo \citeonline{PIRES}, JS é uma linguagem de programação, pequena, leve, orientada a objetos e multi-plataforma (Código \ref{lst:codigo22}). Mais conhecida como uma linguagem de script para páginas web, mas também muito bem utilizada em dispositivos móveis modernos, como celulares e tablets. Hoje em dia, JS é uma linguagem que pode ser utilizada em qualquer aspecto, desde aplicações no lado cliente (aplicações de front-end), como do lado servidor (aplicações server-side).
+
+{\singlespace
+\begin{lstlisting}[caption=Classe Pessoa em \textit{JavaScript},language=Java,label={lst:codigo22}]
+<script language="javascript">
+function Pessoa () {
+    var nome;
+    var sobrenome;
+    
+    this.getNome = getNome;
+    this.getSobrenome = getSobrenome;
+    this.setNome = setNome;
+    this.setSobrenome = setSobrenome;
+    this.nomeCompleto = nomeCompleto;
+    
+    function getNome () {
+        return nome;
+    }
+    
+    function getSobrenome () {
+        return sobrenome;
+    }
+    
+    function setNome (_nome) {
+        nome = _nome;
+    }
+    
+    function setSobrenome (_sobrenome) {
+        sobrenome = _sobrenome;
+    }
+    
+    function nomeCompleto () {
+        return getNome() + " " + getSobrenome();
+    }
+}
+</script>
+\end{lstlisting}
+}
+
+Portanto, esta linguagem pode interagir com todo conteúdo da página e a janela do navegador, sem realizar requisições ao servidor da aplicação, desta forma oferece uma dinâmica maior às páginas, maior velocidade ao usuário e maior flexibilidade ao programador.
+
+\section{\textit{jQuery}}
 \label{sec:jquery}
 
-O \textit{jQuery} é uma popular biblioteca \textit{cross-browser} que facilita a implementação de diversas funcionalidades no \textit{client-side}, como manipulação de elementos, interações \textit{AJAX} e tratamento de eventos.
+Nos dias de hoje a \textit{internet} é um ambiente dinâmico, e os seus usuários exigem cada vez mais interatividade e estilo. Para construir interessantes sites interativos, os desenvolvedores voltam-se para o uso bibliotecas \textit{JavaScript} como \textit{jQuery}. Esta biblioteca permite automatizar tarefas comuns e simplificar as complicadas. Uma das razões para a popularidade do \textit{jQuery} é sua capacidade de ajudar em uma ampla gama de tarefas.
 
-\section{Amberjack}
+Segundo \citeonline{CHAFFER} muitos dos conceitos da biblioteca são baseados na estrutura do código \textit{HTML} e \textit{Cascading Style Sheets} (CSS). Suas principais características podem nos ajudar a realizar as seguintes tarefas:
+
+\begin{itemize}
+\item Acessar os elementos da página: Sem utilizar uma biblioteca \textit{JavaScript} que facilite a seleção de elementos da página, desenvolvedores precisam escrever complexos scripts utilizando a estrutura do \textit{Document Object Model} (DOM). Através desta biblioteca, é possível utilizar um eficiente mecanismo de seleção dos elementos.
+
+\begin{center}
+\textit{\$('div.content').find('p');}
+\end{center}
+
+\item Alterar a aparência da página: CSS oferece uma poderosa maneira de alterar a aparência de páginas web. Com \textit{jQuery} os desenvolvedores podem alterar dinamicamente as propriedades do CSS da página, mesmo que ela já tenha sido carregada.
+
+\begin{center}
+\textit{\$('ul > li:first').addClass('active');}
+\end{center}
+
+\item Manipular o conteúdo da página: \textit{jQuery} pode modificar o conteúdo da página sem maiores problemas. É possível alterar textos, adicionar ou trocar imagens, re-ordenar listas e até adicionar novos elementos na página, tudo isso com uma \textit{Application Programming Interface} (API) fácil de usar \cite{JQUERY-API}.
+
+\begin{center}
+\textit{\$('\#container').append('<pre>News</pre>');}
+\end{center}
+
+\item Responder a interação do usuário: A biblioteca oferece uma maneira simples de interceptar a vasta gama de eventos que o usuário pode disparar, como por exemplo, o evento de clicar em um \textit{link}.
+
+\begin{center}
+\textit{\$('button.show-details').click(function() \{ \$('div.details').show(); \});}
+\end{center}
+
+\item Executar requisições assíncronas: Esta técnica é chamada de AJAX, o que significa \textit{Asynchronous JavaScript and XML}, a qual possibilita a comunicação cliente-servidor. Desta maneira o desenvolvedor pode executar chamadas ao servidor sem recarregar a página.
+
+\begin{center}
+\textit{\$('div.details').load('more.html \#content');}
+\end{center}
+
+\item Solucionar incompatibilidades de navegadores: Esta biblioteca é \textit{cross-browser}, o que significa a total compatibilidade de sua API com os atuais navegadores.
+\end{itemize}
+
+Portanto, a utilização desta biblioteca facilita o desenvolvimento de aplicações web e diminui a probabilidade de erros, causados pela divergência de padrões existentes entre os navegadores.
+
+\section{\textit{Amberjack}}
 \label{sec:amberjack}
 
-O \textit{Amberjack2} é a segunda versão da biblioteca \textit{Amberjack} (http://amberjack.org/), o objetivo original desta ferramenta é a criação de \textit{tours} para sites, guiando o usuário através das páginas, exibindo pequenos textos descritivos enquanto aplica um efeito de realce no elemento em foco no contexto. Um exemplo do \textit{tour} gerado por esta biblioteca pode ser visto na Figura \ref{figura_22}.
+\textit{Amberjack} (AJ) é uma biblioteca de código aberto que você pode usar para criar \textit{tours} - tutoriais guiados - que orientam os visitantes do seu site. A idéia básica é explicar as páginas existentes do seu site através de um texto (como este). O texto explicativo é exibido em uma caixa de diálogo uma camada acima da sua página \textit{web} (Figura \ref{figura_22}). AJ foi criado com ênfase na flexibilidade e na facilidade de customização.
 
 \begin{figure}[ht]
     \centering
@@ -192,3 +276,40 @@ O \textit{Amberjack2} é a segunda versão da biblioteca \textit{Amberjack} (htt
     \caption{\textit{Tour} gerado pela biblioteca \textit{Amberjack}}
     \label{figura_22}
 \end{figure}
+
+Para utilizar esta biblioteca não é necessário amplo conhecimento de \textit{JavaScript}, você só precisa adicionar um código \textit{HTML} a sua página web. Este código descreve cada passo que será realizado na página. O código é organizado por um estrutura de "div" aninhados e atributos que descrevem propriedades do cenário (Código \ref{lst:codigo22}).
+
+{\singlespace
+\begin{lstlisting}[caption=Estrutura do código \textit{HTML} do \textit{Amberjack},language=HTML,label={lst:codigo23}]
+<div class="ajTourDef" id="MeuExemplo" style="display:none" title="http://feedback.exemplo.com/">
+  <div title="http://exemplo.com/">
+    <div title="id:'elemento1',padding:0,trbl:'ltb'">
+      <strong>Primeiro passo</strong>
+      <br />Primeiro passo na página inicial
+    </div>
+    <div title="id:'elemento2',padding:0,trbl:'ltb'">
+      Segundo passo
+      <br />Próximo passo será em outra página.
+    </div>    
+  </div>
+  <div title="http://exemplo.com/noticias">
+    <div title="id:'markerColor',padding:0,trbl:'ltb'">
+      <strong>Fim do exemplo</strong>
+      <br />Página de notícias.
+    </div>
+  </div>
+</div>
+\end{lstlisting}
+}
+
+A primeira linha define uma ``div'' responsável pelo tutorial. Nesta ``div'' são definidos dois importantes atributos, id e title. O id é o identificador do tutorial, o qual deve ser utilizado para iniciá-lo, já o title define a url que o usuário será redirecionado ao terminar o tutorial.
+
+Nas linhas 2 e 12, são criadas as ``div'' que definem o contexto no qual os passos serão realizados. O atributo title define a url na qual os passos serão executados.
+
+Dentro de cada uma destas ``div'' que estabelecem o contexto de execução, são criadas as estruturas finais. Cada ``div'' que encontra-se dentro de um contexto, tem dois importantes atributos, id e trbl. Eles são reponsáveis por definir qual elemento da página será destacado e qual será a posição da caixa de diálogo \cite{AJ}. O conteúdo de cada uma delas será o texto exibido no \textit{tour}.
+
+Por fim, após definir todos os cenários que deseja inserir um \textit{tour}, o mesmo pode ser iniciado a partir da passagem de um parâmetro na url:
+
+\begin{center}
+\textit{http://meuexemplo.com/?tourId=MeuExemplo\&skinId=Safari}
+\end{center}
