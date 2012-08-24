@@ -68,6 +68,205 @@ O resultado de execução do código acima pode ser visto na Figura \ref{figura_
 
 Além da utilização desta biblioteca de testes, foi utilizado o conceito de "passos de bebê", ou seja, pequenas partes são desenvolvidas a cada momento, seja levantamento de requisitos, implementação de funcionalidade, refatoração ou até especificações. Um exemplo disto é focar no desenvolvimento de uma pequena parte de uma funcionalidade, diminuindo o risco do desenvolvimento e asegurando o atingimento de objetivos alcançaveis \cite{RODRIGO}.
 
+\subsection{Arquitetura da ferramenta}
+
+O projeto inicial levou a construção de uma arquitetura onde os elementos constituintes da ferramenta se relacionavam conforme o modelo apresentado na Figura \ref{figura_32}.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.5 \textwidth]{figuras/figura_32}
+    \caption{Diagrama de classes da arquitetura inicial}
+    \label{figura_32}
+\end{figure}
+
+Entretanto, após implementada esta arquitetura pode-se verificar a dificuldade na utilização da ferramenta. Foi então realizado um refatoramento que levou a descoberta de uma biblioteca da linguagem \textit{Ruby} (\textit{Hashr}) que facilitou uma nova arquitetura.
+
+A biblioteca \textit{Hashr} cria uma nova classe derivada da classe \textit{Hash}, que simplifica o uso de \textit{hashes} aninhados e acesso aos seus valores \cite{HASHR}. O Código \ref{lst:codigo36} exemplifica o uso desta estrutura.
+
+{\singlespace
+\begin{lstlisting}[caption=Exemplo de uso da estrutura \textit{Hashr},label={lst:codigo36}]
+monografia = Hashr.new titulo: 'Documentacao Executavel',
+                       autores: {autor_1: 'Tiago', autor_2: 'Natanael'}
+
+monografia.titulo  # => 'Documentacao Executavel'
+monografia.autor_1 # => 'Tiago'
+monografia.autor_2 # => 'Natanael'
+
+\end{lstlisting}
+}
+
+Porém o exemplo acima não é a melhor representação da estrutura desejada. Os autores devem pertencer a uma lista, entretanto o \textit{Hashr} não converte os itens da lista conforme esperado. Para resolver este problema, foi desenvolvido um método recursivo que converte os valores em lista produzindo assim os efeitos esperados (Código \ref{lst:codigo37}).
+
+{\singlespace
+\begin{lstlisting}[caption=Método de conversão para \textit{Hashr},label={lst:codigo37}]
+monografia = Hashr.new titulo: 'Documentacao Executavel',
+                       autores: [{nome: 'Tiago'}, {nome: 'Natanael'}]
+
+monografia.autores.first.nome # => NoMethodError
+
+def convert_to_hashr(hash)
+ hash = Hashr.new(hash)
+ hash.values.find_all { |value| value.is_a?(Array) }.each do |value|
+   value.each_index do |i|
+     value[i] = convert_to_hashr(value[i]) if value[i].is_a? Hash
+   end
+ end
+ hash
+end
+
+monografia = convert_to_hashr(monografia)
+monografia.autores.first.nome  # => 'Tiago'
+\end{lstlisting}
+}
+
+Com essa abordagem, foi possível criar uma estrutura simples de dicionários e listas para representar as classes \textit{Step} e \textit{MicroStep}, visto que essas classes eram pobres de lógica e serviam apenas para a estruturação e persistência de dados. Com essa estrutura foi possível fazer a simplificação da entrada de dados para o cadastro e gerenciamento dos cenários, usando o formato de serialização de dados \textit{YAML}.
+
+A vantagem de utilizar este formato é que ele pode ser facilmente entendível por humanos e ao mesmo tempo é flexível e facilmente manipulável, conforme descrito no tópico \ref{sec:yaml}.
+
+Usando esse formato de entrada, o cadastro de um novo cenário pode ser descrito conforme exemplificado no Código \ref{lst:codigo38}.
+
+{\singlespace
+\begin{lstlisting}[caption=Exemplo de cenário escrito em \textit{YAML},label={lst:codigo38}]
+scenario: Login de Usuario
+
+contexts:
+  - url: /
+    steps:
+      - description:
+          Os links referentes ao acesso do usuario
+          ficam no menu do canto superior direito
+        element: actions
+        padding: 3
+        position: rmb
+
+      - description: Clique na opcao 'Acesso'
+        element: sign_in
+        padding: 3
+        position: rmb
+        action: click
+
+  - url: /usuarios/login
+    steps:
+      - description: Preencha o campo 'E-mail'
+        element: usuario_email
+        padding: 3
+        position: tcc
+        action: type
+        value: exemplo@exemplo.com
+      - description: Preencha o campo 'Senha'
+        element: usuario_senha
+        padding: 3
+        position: tcc
+        action: type
+        value: exemplo123
+      - description: Clique no botao 'Entrar'
+        element: login
+        padding: 3
+        position: tcc
+        action: click
+\end{lstlisting}
+}
+
+Por fim, para implementar esta arquitetura integrada a Biblioteca Digital, o \textit{framework} utilizado disponobiliza um conjunto de \textit{scripts} que auxiliam o desenvolvedor. O Código \ref{lst:codigo42} representa o comando que gera esta estrutura.
+
+{\singlespace
+\begin{lstlisting}[caption=Comando para gerar um modelo,label={lst:codigo42}]
+$ rails generate scaffold Scenario yaml:text
+\end{lstlisting}
+}
+
+Após isto, a classe responsável pela descrição do cenário e toda a interface de gerenciamento pelo usuário é criada. Esta classe irá conter toda a lógica de leitura do cenário escrito no formato YAML.
+
+\subsection{Funcionalidades desenvolvidas}
+
+Para a implementação do processo da execução do cenário, foi utilizado a linguagem \textit{JavaScript}, através das bibliotecas \textit{open-source: jQuery} (tópico \ref{sec:jquery}) e \textit{Amberjack2} (tópico \ref{sec:amberjack}).
+
+Durante o processo de desenvolvimento foi detectado um problema causado pela necessidade da passagem de parâmetros pela \textit{URL}, obrigatórios para que a biblioteca \textit{Amberjack} fosse corretamente inicializada. Esses parâmetros são facilmente repassados quando a troca de página se da por uma simples requisição \textit{GET} \cite{W3}, entretanto quando ela é resultante de redirecionamento vindo do servidor, esses parâmetros se perdem.
+
+Uma solução simples e eficaz para este problema foi o uso de \textit{cookies}. \textit{Cookies} são pequenas quantidades de informação que uma aplicação \textit{web} pode salvar no navegador, com o objetivo de recuperar posteriormente. 
+
+A seguir, são descritas as funcionalidades especificadas para a ferramenta NSI-BD-Tour.
+
+\textbf{F01.} Cadastro e gerenciamento de cenários usando \textit{YAML}
+
+O objetivo dessa funcionalidade é permitir o usuário descrever os cenários em uma linguagem simples - formato \textit{YAML}. O cenário descrito tem será utilizado para validar e guiar o usuário no emprego do sistema. Na implementação dessa funcionalidade, foi criado um cadastro de cenários, onde há um campo de texto em que o usuário pode descrever o cenário.
+
+Uma limitação desta funcionalidade ainda não abordada é a validação do formato do texto inserido pelo usuário. Caso o cenário inserido não atenda ao padrão, poderá comprometer o funcionamento da ferramenta.
+
+\textbf{F02.} Análise e extração de dados do \textit{YAML}
+
+O objetivo da análise e extração de dados do \textit{YAML} é obter os atributos do cenário, necessários para sua renderização no navegador.
+
+A biblioteca usada para o processo de extração foi a \textit{Psych} \cite{PSYCH}. Essa biblioteca fornece uma maneira fácil de se transformar um texto em formato \textit{YAML} para uma estrutura nativa do \textit{Ruby} composta por dicionários, listas e valores simples. Um exemplo do uso da \textit{Pysch} pode ser visto no Código \ref{lst:codigo39}.
+
+{\singlespace
+\begin{lstlisting}[caption=Exemplo de utilização da bibliteca em \textit{Psych},label={lst:codigo39}]
+require "psych"
+
+yaml = <<-YAML
+  Livro:
+    titulo: 'Poignant Guide to Ruby'
+    autor: '_why'
+    tags:
+      - awesome
+      - ruby
+      - book
+YAML
+
+puts Psych.load(yaml)
+# => {"Livro"=>{"titulo"=>"Poignant Guide to Ruby", "autor"=>"_why", "tags"=>["awesome", "ruby", "book"]}}
+\end{lstlisting}
+}
+
+\textbf{F03.} Renderização do cenário
+
+A renderização do cenário tem como objetivo fornecer todos os dados necessários para que a biblioteca \textit{Amberjack2} possa criar e conduzir os cenários pré-cadastrados.
+Quando um usuário iniciar a execução de um cenário, seus atributos devem ser inseridos como código \textit{HTML} da página. Este código tem sua visualização oculta para usuário e é de uso interno da biblioteca. Ele deve obedecer um formato pré-especificado pelo \textit{Amberjack2}, como pode ser visto no Código \ref{lst:codigo40}.
+
+{\singlespace
+\begin{lstlisting}[caption=Cenário descrito em \textit{HTML} para biblioteca \textit{Amberjack2},language=HTML,label={lst:codigo40}]
+<div class="ajTourDef" id="1-tour-exemplo" style="display:none" title="/">
+  <div title="http://www.exemplo.com">
+    <div title="id:'elemento_id',padding:padding,trbl:'rmb'">
+      Aqui vai o texto do primeiro passo
+    </div>
+    <div title="id:'elemento_id',padding:padding,trbl:'rmb'">
+      Aqui vai o texto do segundo passo
+    </div>
+  </div>
+</div>
+
+\end{lstlisting}
+}
+
+\textbf{F04.} Gerenciar cenário em execução usando cookies
+
+O uso de \textit{cookies} foi necessário para contornar a necessidade da biblioteca \textit{Amberjack} de ter sempre os parâmetros de identificação do cenário na \textit{URL} corrente.
+A solução para este problema foi extender o \textit{Amberjack2}, adicionando o comportamento de manipular \textit{cookies}. Desta maneira, depois da primeira requisição \textit{GET} responsável por iniciar a execução de um cenário, os dados necessários pelo \textit{Amberjack2}, como o identificador do cenário e o tema visual escolhido, ficam persistidos no navegador, eliminando a necessidade da passagem de quaisquer parâmetros relativos ao cenário executado.
+
+\textbf{F05.} Simular a interação entre o usuário e a aplicação
+
+Um passo do cenário pode conter, além de um texto e um elemento indicativo, também uma ação representando a interação do usuário com a interface, como um clique ou um preenchimento de formulário. Estas funcionalidades precisam ser implementadas em \textit{JavaScript} para serem executadas no navegador do cliente.
+
+Foram criadas funções com o objetivo de simular as seguintes ações do usuário: clique, preenchimento de campo de texto, seleção de opções em \textit{checkboxes} e \textit{select}. O Código \ref{lst:codigo41} demonstra a implementação de uma dessas ações.
+
+{\singlespace
+\begin{lstlisting}[caption=Função para seleção de item em um \textit{select},language=bash,label={lst:codigo41}]
+select: function(element, value) {
+      select_element = $(element)[0]
+      $.each(select_element.options, function(index, option) {
+          if (option.text === value) {
+              select_element.selectedIndex = index;
+              $(element).change();
+              return;
+          }
+      })
+},
+\end{lstlisting}
+}
+
+Entretanto, este projeto ainda está em andamento, faltando ainda implementar a ação de escolha de um campo \textit{radio}.
+
 \subsection{Testes desenvolvidos}
 
 Todo processo de desenvolvimento da ferramenta utilizou TDD, onde foram criadas verificações unitárias dos \textit{models}, \textit{views} e \textit{controllers}.
@@ -161,195 +360,6 @@ end
 \end{lstlisting}
 }
 
-\subsection{Arquitetura da ferramenta}
-
-O projeto inicial levou a construção de uma arquitetura onde os elementos constituintes da ferramenta se relacionavam conforme o modelo apresentado na Figura \ref{figura_32}.
-
-\begin{figure}[ht]
-    \centering
-    \includegraphics[width=0.9 \textwidth]{figuras/figura_32}
-    \caption{Diagrama de classes da arquitetura inicial}
-    \label{figura_32}
-\end{figure}
-
-Entretanto, após implementada esta arquitetura pode-se verificar a dificuldade na utilização da ferramenta. Foi então realizado um refatoramento que levou a descoberta de uma biblioteca da linguagem \textit{Ruby} (\textit{Hashr}) que facilitou uma nova arquitetura.
-
-A biblioteca \textit{Hashr} cria uma nova classe derivada da classe \textit{Hash}, que simplifica o uso de \textit{hashes} aninhados e acesso aos seus valores \cite{HASHR}. O Código \ref{lst:codigo36} exemplifica o uso desta estrutura.
-
-{\singlespace
-\begin{lstlisting}[caption=Exemplo de uso da estrutura \textit{Hashr},label={lst:codigo36}]
-monografia = Hashr.new titulo: 'Documentacao Executavel',
-                       autores: {autor_1: 'Tiago', autor_2: 'Natanael'}
-
-monografia.titulo  # => 'Documentacao Executavel'
-monografia.autor_1 # => 'Tiago'
-monografia.autor_2 # => 'Natanael'
-
-\end{lstlisting}
-}
-
-Porém o exemplo acima não é a melhor representação da estrutura desejada. Os autores devem pertencer a uma lista, entretanto o \textit{Hashr} não converte os itens da lista conforme esperado. Para resolver este problema, foi desenvolvido um método recursivo que converte os valores em lista produzindo assim os efeitos esperados (Código \ref{lst:codigo37}).
-
-{\singlespace
-\begin{lstlisting}[caption=Método de conversão para \textit{Hashr},label={lst:codigo37}]
-monografia = Hashr.new titulo: 'Documentacao Executavel',
-                       autores: [{nome: 'Tiago'}, {nome: 'Natanael'}]
-
-monografia.autores.first.nome # => NoMethodError
-
-def convert_to_hashr(hash)
- hash = Hashr.new(hash)
- hash.values.find_all { |value| value.is_a?(Array) }.each do |value|
-   value.each_index do |i|
-     value[i] = convert_to_hashr(value[i]) if value[i].is_a? Hash
-   end
- end
- hash
-end
-
-monografia = convert_to_hashr(monografia)
-monografia.autores.first.nome  # => 'Tiago'
-\end{lstlisting}
-}
-
-Com essa abordagem, foi possível criar uma estrutura simples de dicionários e listas para representar as classes \textit{Step} e \textit{MicroStep}, visto que essas classes eram pobres de lógica e serviam apenas para a estruturação e persistência de dados. Com essa estrutura foi possível fazer a simplificação da entrada de dados para o cadastro e gerenciamento dos cenários, usando o formato de serialização de dados \textit{YAML}.
-
-A vantagem de utilizar este formato é que ele pode ser facilmente entendível por humanos e ao mesmo tempo é flexível e facilmente manipulável, conforme descrito no tópico \ref{sec:yaml}.
-
-Usando esse formato de entrada, o cadastro de um novo cenário pode ser descrito conforme exemplificado no Código \ref{lst:codigo38}.
-
-{\singlespace
-\begin{lstlisting}[caption=Exemplo de cenário escrito em \textit{YAML},label={lst:codigo38}]
-scenario: Login de Usuario
-
-contexts:
-  - url: /
-    steps:
-      - description:
-          Os links referentes ao acesso do usuario
-          ficam no menu do canto superior direito
-        element: actions
-        padding: 3
-        position: rmb
-
-      - description: Clique na opcao 'Acesso'
-        element: sign_in
-        padding: 3
-        position: rmb
-        action: click
-
-  - url: /usuarios/login
-    steps:
-      - description: Preencha o campo 'E-mail'
-        element: usuario_email
-        padding: 3
-        position: tcc
-        action: type
-        value: exemplo@exemplo.com
-      - description: Preencha o campo 'Senha'
-        element: usuario_senha
-        padding: 3
-        position: tcc
-        action: type
-        value: exemplo123
-      - description: Clique no botao 'Entrar'
-        element: login
-        padding: 3
-        position: tcc
-        action: click
-\end{lstlisting}
-}
-
-\subsection{Funcionalidades desenvolvidas}
-
-Para a implementação do processo da execução do cenário, foi utilizado a linguagem \textit{JavaScript}, através das bibliotecas \textit{open-source: jQuery} (tópico \ref{sec:jquery}) e \textit{Amberjack2} (tópico \ref{sec:amberjack}).
-
-Durante o processo de desenvolvimento foi detectado um problema causado pela necessidade da passagem de parâmetros pela \textit{URL}, obrigatórios para que a biblioteca \textit{Amberjack} fosse corretamente inicializada. Esses parâmetros são facilmente repassados quando a troca de página se da por uma simples requisição \textit{GET} \cite{W3}, entretanto quando ela é resultante de redirecionamento vindo do servidor, esses parâmetros se perdem.
-
-Uma solução simples e eficaz para este problema foi o uso de \textit{cookies}. \textit{Cookies} são pequenas quantidades de informação que uma aplicação \textit{web} pode salvar no navegador, com o objetivo de recuperar posteriormente. 
-
-A seguir, são descritas as funcionalidades especificadas para a ferramenta NSI-BD-Tour.
-
-\textbf{F01.} Cadastro e gerenciamento de cenários usando \textit{YAML}
-
-O objetivo dessa funcionalidade é permitir o usuário descrever os cenários em uma linguagem simples - formato \textit{YAML}. O cenário descrito tem será utilizado para validar e guiar o usuário no emprego do sistema. Na implementação dessa funcionalidade, foi criado um cadastro de cenários, onde há um campo de texto em que o usuário pode descrever o cenário.
-
-Uma limitação desta funcionalidade ainda não abordada é a validação do formato do texto inserido pelo usuário. Caso o cenário inserido não atenda ao padrão, poderá comprometer o funcionamento da ferramenta.
-
-\textbf{F02.} Análise e extração de dados do \textit{YAML}
-
-O objetivo da análise e extração de dados do \textit{YAML} é obter os atributos do cenário, necessários para sua renderização no navegador.
-
-A biblioteca usada para o processo de extração foi a \textit{Psych} (https://github.com/tenderlove/psych). Essa biblioteca fornece uma maneira fácil de se transformar um texto em formato \textit{YAML} para uma estrutura nativa do \textit{Ruby} composta por dicionários, listas e valores simples. Um exemplo do uso da \textit{Pysch} pode ser visto no Código \ref{lst:codigo39}.
-
-{\singlespace
-\begin{lstlisting}[caption=Exemplo de utilização da bibliteca em \textit{Psych},label={lst:codigo39}]
-require "psych"
-
-yaml = <<-YAML
-  Livro:
-    titulo: 'Poignant Guide to Ruby'
-    autor: '_why'
-    tags:
-      - awesome
-      - ruby
-      - book
-YAML
-
-puts Psych.load(yaml)
-# => {"Livro"=>{"titulo"=>"Poignant Guide to Ruby", "autor"=>"_why", "tags"=>["awesome", "ruby", "book"]}}
-\end{lstlisting}
-}
-
-\textbf{F03.} Renderização do cenário
-
-A renderização do cenário tem como objetivo fornecer todos os dados necessários para que a biblioteca \textit{Amberjack2} possa criar e conduzir os cenários pré-cadastrados.
-Quando um usuário iniciar a execução de um cenário, seus atributos devem ser inseridos como código \textit{HTML} da página. Este código tem sua visualização oculta para usuário e é de uso interno da biblioteca. Ele deve obedecer um formato pré-especificado pelo \textit{Amberjack2}, como pode ser visto no Código \ref{lst:codigo40}.
-
-{\singlespace
-\begin{lstlisting}[caption=Cenário descrito em \textit{HTML} para biblioteca \textit{Amberjack2},language=HTML,label={lst:codigo40}]
-<div class="ajTourDef" id="1-tour-exemplo" style="display:none" title="/">
-  <div title="http://www.exemplo.com">
-    <div title="id:'elemento_id',padding:padding,trbl:'rmb'">
-      Aqui vai o texto do primeiro passo
-    </div>
-    <div title="id:'elemento_id',padding:padding,trbl:'rmb'">
-      Aqui vai o texto do segundo passo
-    </div>
-  </div>
-</div>
-
-\end{lstlisting}
-}
-
-\textbf{F04.} Gerenciar cenário em execução usando cookies
-
-O uso de \textit{cookies} foi necessário para contornar a necessidade da biblioteca \textit{Amberjack} de ter sempre os parâmetros de identificação do cenário na \textit{URL} corrente.
-A solução para este problema foi extender o \textit{Amberjack2}, adicionando o comportamento de manipular \textit{cookies}. Desta maneira, depois da primeira requisição \textit{GET} responsável por iniciar a execução de um cenário, os dados necessários pelo \textit{Amberjack2}, como o identificador do cenário e o tema visual escolhido, ficam persistidos no navegador, eliminando a necessidade da passagem de quaisquer parâmetros relativos ao cenário executado.
-
-\textbf{F05.} Simular a interação entre o usuário e a aplicação
-
-Um passo do cenário pode conter, além de um texto e um elemento indicativo, também uma ação representando a interação do usuário com a interface, como um clique ou um preenchimento de formulário. Estas funcionalidades precisam ser implementadas em \textit{JavaScript} para serem executadas no navegador do cliente.
-
-Foram criadas funções com o objetivo de simular as seguintes ações do usuário: clique, preenchimento de campo de texto, seleção de opções em \textit{checkboxes} e \textit{select}. O Código \ref{lst:codigo41} demonstra a implementação de uma dessas ações.
-
-{\singlespace
-\begin{lstlisting}[caption=Função para seleção de item em um \textit{select},language=bash,label={lst:codigo41}]
-select: function(element, value) {
-      select_element = $(element)[0]
-      $.each(select_element.options, function(index, option) {
-          if (option.text === value) {
-              select_element.selectedIndex = index;
-              $(element).change();
-              return;
-          }
-      })
-},
-\end{lstlisting}
-}
-
-Entretanto, este projeto ainda está em andamento, faltando ainda implementar a ação de escolha de um campo \textit{radio}.
-
 \section{Resultados e Discussão}
 
 Após o término da implementação da ferramenta NSI-BD-Tour, torna-se necessário representar suas possíveis aplicações. Neste tópico, pretende-se demonstrar como utilizá-la para validar a aplicação e guiar o treinamento do usuário em funcionalidades da Biblioteca Digital da EPCT.
@@ -386,7 +396,7 @@ Na Figura \ref{tour_3}, pode-se observar a criação de um novo cenário que ter
     \label{tour_3}
 \end{figure}
 
-Nesta Figura, pode-se observar o campo “Descrição do Cenário”, onde foi inserido a descrição dos passos necessários para a execução do cenário, que precisa atender ao padrão YAML, conforme descrito no  tópico \ref{sec:yaml} do referencial teórico.
+Ainda na Figura \ref{tour_3}, pode-se observar o campo “Descrição do Cenário”, onde foi inserido a descrição dos passos necessários para a execução do cenário, que precisa atender ao padrão YAML, conforme descrito no  tópico \ref{sec:yaml} do referencial teórico.
 
 Cabe ressaltar que a atual interface não critica o atendimento do padrão, sendo essa crítica do formato, uma funcionalidade prevista para  trabalhos futuros.
 

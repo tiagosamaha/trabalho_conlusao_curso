@@ -142,9 +142,36 @@ Por tudo isso, percebe-se que os testes de software cumprem uma função ética 
 
 Portanto, para conduzir os testes efetivamente, existe toda uma complexidade advinda da variedade de algorítmos que precisarão ser testados. Várias técnicas propostas para endereçar os testes de algorítmos são apresentadas nos tópico a seguir.
 
-\section{Tipos de testes de software}
+\section{Testes de software}
 
-...
+O desenvolvimento de sistemas de software deve ser acompanhado de testes que contemplem tanto o funcionamento interno dos componentes como o comportamento esperado das funcionalidades. Estas atividades são conhecidas como testes de caixa branca e caixa preta, respectivamente. \citeonline{PRESSMAN} conceitua estes paradigmas de teste conforme abaixo:
+
+\subsection{Testes caixa branca}
+
+Este método de teste verifica internamente o funcionamento das estrutura de dados do sistema, testando os caminhos possíveis e as decisões lógicas existentes. O procedimento de se testar internamente é útil para detectar erros lógicos em funções secundárias, que usualmente não levam a mesma atenção que as principais, além de mostrar caminhos não imaginados no fluxo de execução e erros tipográficos.
+
+\subsection{Testes de caixa preta}
+
+Os testes do tipo caixa preta são responsáveis por testar os requisitos funcionais, desconsiderando o funcionamento interno do componente de software. Nos testes de caixa preta, o desenvolvedor cria um conjunto de entradas de dados e verifica a saída esperada. Deste maneira, procura-se detectar erros na implementação dos requisitos, como na interface de usuário, inicialização e término do sistema, desempenho e estruturas de dados.
+
+\subsection{Testes de regressão}
+Indepenndete da estrategia de testes, sempre que alteracoes forem realizadas no codigo fonte, efeitos colaterais podem ser criados em outras partes do codigo. Portanto, ainda corroborando com o raciocínio de \opcit{PRESSMAN}, o software precisa ser totalmente testado após cada alteração produzida. Testes de regressão buscam levar o software às falhas que revelem onde esses defeitos foram provocados.
+
+\subsection{Tipos de testes}
+
+O alvo a ser testado também requer que o programador aplique uma política de testes específica. Por exemplo ao testar métodos, classes, módulos, sistemas, a abordagem deve variar conforme o grau de abstração, a complexidade e o risco inerente.
+
+\begin{itemize}
+\item \textbf{Testes de unidade:} Estes testes são baseados na caixa branca e testam a menor unidade do software possível, como um módulo ou um objeto, visando detectar erros na implementação interna do mesmo. Um teste de unidade deve testar apenas um componente isoladamente, buscado portanto a coesão necessária para garantir sua funcionamento.
+\end{itemize}
+
+\begin{itemize}
+\item \textbf{Testes de integração:} Somente os testes de unidade não são suficientes para garantir que todos os componentes de um sistema irão funcionar perfeitamente quando integrados. Um componente do sistema pode ter um comportamento inesperado, adverso, sobre outro. Os testes de integração detectam erros nos contratos entre os módulos, definindo a estrutura pré-definida do software.
+\end{itemize}
+
+\begin{itemize}
+\item \textbf{Teste de validação:} Esta estratégia de teste pode ser definida pela validação dos requisitos do usuário, são os testes finais do software. Estes testes validam os critérios de aceitação que irão informar se os requisitos corretos foram implementados no sistema. Por exemplo, quando um cliente utiliza o sistema e encontra as funcionalidades requeridas.
+\end{itemize}
 
 \section{Formato \textit{YAML}}
 \label{sec:yaml}
