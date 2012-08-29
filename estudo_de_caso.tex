@@ -218,10 +218,12 @@ puts Psych.load(yaml)
 \end{lstlisting}
 }
 
+Portanto, o NSI-BD-Tour necessita de um método (Código \ref{lst:codigo37}, linhas 6-14) responsável pela conversão dos cenários descritos em YAML para utilizá-los internamente na classe \textit{Scenario}.
+
 \textbf{F03.} Renderização do cenário
 
 A renderização do cenário tem como objetivo fornecer todos os dados necessários para que a biblioteca \textit{Amberjack2} possa criar e conduzir os cenários pré-cadastrados.
-Quando um usuário iniciar a execução de um cenário, seus atributos devem ser inseridos como código \textit{HTML} da página. Este código tem sua visualização oculta para usuário e é de uso interno da biblioteca. Ele deve obedecer um formato pré-especificado pelo \textit{Amberjack2}, como pode ser visto no Código \ref{lst:codigo40}.
+Quando um usuário iniciar a execução de um cenário, seus atributos devem ser inseridos como código \textit{HTML} da página. Este código tem sua visualização oculta para usuário e é de uso interno da biblioteca. Este deve obedecer a um formato pré-especificado pelo \textit{Amberjack2}, como pode ser visto no Código \ref{lst:codigo40}.
 
 {\singlespace
 \begin{lstlisting}[caption=Cenário descrito em \textit{HTML} para biblioteca \textit{Amberjack2},language=HTML,label={lst:codigo40}]
@@ -238,6 +240,8 @@ Quando um usuário iniciar a execução de um cenário, seus atributos devem ser
 
 \end{lstlisting}
 }
+
+Este cenário descrito em HTML fica oculto conforme a presença do parâmetro (atributo id apresentado na linha 1 do Código \ref{lst:codigo40}) de chamada do Amberjack2 ou a exitência do \textit{cookie} que identifica o cenário atual.
 
 \textbf{F04.} Gerenciar cenário em execução usando cookies
 
