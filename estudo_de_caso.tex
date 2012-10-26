@@ -3,17 +3,17 @@ Este capítulo apresenta um estudo de caso da implementação de uma ferramenta 
 
 O estudo de caso foi idealizado visando comprovar as vantagens obtidas na produção e uso de documentação executável. Espera-se que o uso deste recurso no presente trabalho, traga como valores o apoio a validação de requisitos e maiores facilidades para treinamento de usuários no emprego do sistema.
 
-\section{Projeto da Biblioteca Digital} 	 	
+\section{Projeto da Biblioteca Digital}
 
 A Biblioteca Digital (BD) é um projeto de pesquisa e desenvolvimento que inciou-se em março de 2007, através de uma solicitação da SETEC/MEC ao Núcleo de Pesquisa de Sistemas de Informação (NSI) do Instituto Federal Fluminense. O NSI foi criado em abril de 2002 e desde essa época vem estimulando o uso tecnologias livres para pesquisa e desenvolvimento de software.
 
 O projeto da BD visa disponibilizar um acervo de documentos produzidos pela rede de Instituições de Educação Profissional Científica e Tecnológica (EPCT) – como artigos, monografias, dissertações, teses e periódicos – promovendo a disseminação de conhecimento através destes conteúdos.
 
-Como em todo projeto de desenvolvimento de software, a documentação do sistema é um problema constante. Sincronizar documentos escritos em papel com o código do sistema, é uma tarefa difícil e sujeita a falhas. 
+Como em todo projeto de desenvolvimento de software, a documentação do sistema é um problema constante. Sincronizar documentos escritos em papel com o código do sistema, é uma tarefa difícil e sujeita a falhas.
 
 \section{Proposta da ferramenta}
 
-Devido a este problema, foi levantada a necessidade de desenvolver uma ferramenta de documentação executável que permita ao usuário validar requisitos do sistema e guiá-lo na utilização do mesmo. Portanto esta ferramenta tem como objetivos suportar sua documentação e treinar o usuário no emprego do sistema.
+Devido a este problema, foi levantada a necessidade de desenvolver uma ferramenta de documentação executável, denominada NSI-BD-Tour, que permita ao usuário validar requisitos do sistema e guiá-lo na utilização do mesmo. Portanto esta ferramenta tem como objetivos suportar sua documentação e treinar o usuário no emprego do sistema.
 
 Assim, pode-se destacar como vantagens da implantação a otimização do uso do sistema, pois através dos passos estabelecidos o usuário poderá avaliar a simplicidade da execução das ações ou estabelecer outros comportamentos melhorados.
 
@@ -120,7 +120,7 @@ Por fim, após toda a estrutura de dados criada, será necessário criar a inter
 Nesta seção serão descritas as funcionalidades especificadas para o desenvolvimento da ferramenta NSI-BD-Tour.
 
 \textbf{F01.} Cadastro e gerenciamento de cenários
-	
+
 O objetivo desta funcionalidade é permitir o usuário descrever os cenários em uma linguagem simples - formato YAML. O cenário descrito será utilizado para validar e guiar o usuário no emprego do sistema. Na implementação dessa funcionalidade, foi criado um cadastro de cenários, onde há um campo de texto em que o usuário pode descrever o cenário.
 
 Para implementar esta funcionalidade, utilizou-se de um recurso disponibilizado pelo framework (Rails) no qual a Biblioteca Digital é desenvolvida. O Código \ref{lst:codigo42} representa o comando utilizado para criar o modelo definido.
