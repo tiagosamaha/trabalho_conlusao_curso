@@ -203,6 +203,54 @@ listagem_2:
 \end{lstlisting}
 }
 
+\section{\textit{Psych}}
+
+\textit{Psych} \cite{PSYCH} é uma biblioteca open-source e multiplataforma, implementada em Ruby, para a análise e geração de YAML.
+
+Esta biblioteca é de uso bastante simples, como pode ser visto no exemplo abaixo (Código \ref{lst:codigo_psych}), em que uma string em formato YAML é analisada e transforma em uma estrutura de dados em Ruby, com listas, dicionários e valores simples:
+
+{\singlespace
+\begin{lstlisting}[caption=Biblioteca \textit{Psych}, language=Ruby,label={lst:codigo_psych}]
+yaml = <<-YAML
+livros:
+  Tecnicos: [Programming Ruby 1.9]
+  Literatura: [O Festim dos Corvos, Morte dos Reis]
+YAML
+
+puts Psych.load(yaml)
+# => {"livros" => {
+#      "Tecnicos" => ["Programming Ruby 1.9"],
+#      "Literatura" => ["O Festim dos Corvos", "Morte dos Reis"]}}
+\end{lstlisting}
+}
+
+\section{\textit{Hashr}}
+
+\textit{Hashr} \cite{HASHR} é uma pequena e simples biblioteca em Ruby, que extende a classe nativa \textit{Hash} da linguagem, adicionando algumas características que tornam o uso da estrutura de dicionários mais fácil, elegante e menos propensa a erros.
+
+Em um objeto da classe Hashr, diferentemente da classe nativa Hash, os valores do dicionário podem ser acessados de forma direta, bastando apenas chamar o método de mesmo nome do índice que o valor correspondente é retornado (Código \ref{lst:codigo_hashr}).
+
+Da mesma forma, esta biblioteca também permite a atribuição dos valores, bem como a criação de novos pares no dicionário. Além de aceitar também, métodos com os nomes dos índices acrescentados do caractere "?", que retorna sempre um valor booleano, \textit{true} se o índice existir e \textit{false} caso contrário.
+
+Uma característica bastante útil nesta biblioteca é que os dicionários aninhados são automaticamente instanciados pela mesma classe Hashr. Isto é, ao adicionar novos dicionários dentro de um objeto Hashr usando a sintaxe nativa da linguagem, eles também serão objetos Hashr, permitindo o mesmo estilo na manipulação dos mesmos.
+
+{\singlespace
+\begin{lstlisting}[caption=Exemplo do uso da classe \textit{Hashr} retirado da página do projeto, language=Ruby,label={lst:codigo_hashr}]
+config = Hashr.new('foo' => { 'bar' => 'bar' })
+
+config.foo?     # => true
+config.foo      # => { :bar => 'bar' }
+
+config.foo.bar? # => true
+config.foo.bar  # => 'bar'
+
+config.foo.bar = 'bar!'
+config.foo.bar # => 'bar!'
+
+config.foo.baz = 'baz'
+config.foo.baz # => 'baz'\end{lstlisting}
+}
+
 
 \section{JavaScript}
 
@@ -419,8 +467,14 @@ Dentre os principais princípios \cite{HANSSON} seguidos por este framework est�
 
 Nesta divisão arquitetural, os serviços do sistema são divididos por recursos e cada recurso é servido em uma URI própria. A partir daí os componentes clientes, conhecendo o endereço do recurso, podem fazer uso do mesmo através da interface genérica definida pelo REST usando os verbos HTTP. Usa-se o verbo GET para se obter uma representação do recurso no servidor, o POST para a criação de uma nova instância no servidor, o PUT para a atualização de um recurso já existente e finalmente o verbo DELETE, para a exclusão de um determinado recurso.
 
-Além destes princípios, o Ruby on Rails segue o padrão arquitetural \textit{Model-View-Controller (MVC)}. Este padrão divide a aplicação em três partes principais, os modelos, as visões e os controladores.
-FIGURA MVC (figura mvc).
+Além destes princípios, o Ruby on Rails segue o padrão arquitetural \textit{Model-View-Controller (MVC)} (Figura \ref{figura_23}). Este padrão divide a aplicação em três partes principais, os modelos, as visões e os controladores.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.9 \textwidth]{figuras/mvc}
+    \caption{Esquema MVC}
+    \label{figura_23}
+\end{figure}
 
 Os modelos são as classes que realizam a persistência, a recuperação e o tratamentos dos dados utilizados pelo sistema, englobando a maior parte da lógica de negócio. No Rails, cada modelo está ligado a uma tabela no banco de dados.
 
