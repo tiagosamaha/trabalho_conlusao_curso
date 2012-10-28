@@ -397,61 +397,136 @@ Por fim, após definir todos os cenários que deseja inserir um \textit{tour}, o
 
 \section{Ruby}
 
-A linguagem de programação Ruby \cite{RUBY} foi criada no Japão, e desde então seu uso vem crescendo cada vez mais ao redor do mundo com uma comunidade forte e ativa. O objetivo de Matsumoto, era criar uma linguagem que fosse agradável ao desenvolvedor e que possibilitasse uma maior produtividade com o menor trabalho possível.
+A linguagem de programação \textit{Ruby} \cite{RUBY} foi criada no Japão, e desde então seu uso vem crescendo cada vez mais ao redor do mundo com uma comunidade forte e ativa. O objetivo de Matsumoto, era criar uma linguagem que fosse agradável ao desenvolvedor e que possibilitasse uma maior produtividade com o menor trabalho possível.
 
-Ruby é uma linguagem open-source e multiplataforma, o que possibilita, além do seu uso em diversos ambientes diferentes, o surgimento de um grande número de bibliotecas criadas pela comunidade de desenvolvedores e até outras implementações da própria linguagem.
+\textit{Ruby} é uma linguagem open-source e multiplataforma, o que possibilita, além do seu uso em diversos ambientes diferentes, o surgimento de um grande número de bibliotecas criadas pela comunidade de desenvolvedores e até outras implementações da própria linguagem.
 
-Existem várias versões do Ruby, sendo a oficial conhecida como RMI (Matz’s Ruby Interpreter). Outras importantes versões são a Rubinius \cite{RUBINIUS} - uma implementação com grande parte escrita usando o próprio Ruby -  e a jRuby \cite{JRUBY} - uma implementação em Java, executada na própria JVM.
+Existem várias versões do Ruby, sendo a oficial conhecida como RMI (\textit{Matz’s Ruby Interpreter}). Outras importantes versões são a \textit{Rubinius} \cite{RUBINIUS} - uma implementação com grande parte escrita usando o próprio Ruby -  e a \textit{jRuby} \cite{JRUBY} - uma implementação em Java, executada na própria JVM.
 
 Esta linguagem de script tem tipagem forte e dinâmica, além de ser totalmente orientada a objetos.  A Orientação a objetos no projeto desta linguagem é notável, todos os elementos manipulados no uso desta linguagem são objetos, como os tipos simples e as próprias classes \cite{THOMAS}.
 
-Tipagem forte significa que os tipos de dados são bem definidos, existindo uma distância maior entre o comportamento dos tipos existentes. Enquanto que numa linguagem de tipagem fraca, eles estão mais próximos. Uma popular linguagem com tipagem fraca é o JavaScript, no exemplo a seguir (Código X) um tipo string é somado a um tipo number, e o resultado é uma string.
+Tipagem forte significa que os tipos de dados são bem definidos, existindo uma distância maior entre o comportamento dos tipos existentes, enquanto que numa linguagem de tipagem fraca, eles estão mais próximos. Uma linguagem popular com tipagem fraca é o \textit{JavaScript}, no exemplo a seguir (Código \ref{lst:codigo_tipagem_fraca}) um tipo \textit{string} é somado a um tipo \textit{number}, e o resultado é uma \textit{string}.
 
-http://pastie.org/4611261
-Tipagem fraca no JavaScript
+{\singlespace
+\begin{lstlisting}[caption=Tipagem fraca no \textit{JavaScript}, language=Java, label={lst:codigo_tipagem_fraca}]
+string = "lorem ipsum"
+number = 123
+string + number // => "lorem ipsum123"
+\end{lstlisting}
+}
 
-O mesmo código em Ruby gera um erro, visto a definição dos tipos são mais distintas (código X).
+O mesmo código em \textit{Ruby} gera um erro, visto que a definição dos tipos são mais distintas (código \ref{lst:codigo_tipagem_forte}).
 
-http://pastie.org/4611292
-Tipagem forte no Ruby.
+{\singlespace
+\begin{lstlisting}[caption=Tipagem forte no \textit{Ruby}, language=Java, label={lst:codigo_tipagem_forte}]
+string = "lorem ipsum"
+number = 123
+string + number # => TypeError: can't convert Fixnum into String
+\end{lstlisting}
+}
 
-Já a tipagem dinâmica do Ruby, permite que as variáveis sejam meras referências aos objetos, podendo ser estes de qualquer tipo existente (Código X). Em uma linguagem de tipagem estática, o tipo do valor que uma variável pode receber, deve ser previamente declarado (Código X). Linguagens com uma tipagem dinâmica tendem a ser mais flexíveis, dando mais liberdade ao programador.
+Em linguagens de tipagem estática, como o \textit{Java}, o tipo do valor que uma variável pode receber, deve ser previamente declarado (Código \ref{lst:codigo_tipagem_estatica}).
 
-http://pastie.org/4611342
-Tipagem estática no Java
+{\singlespace
+\begin{lstlisting}[caption=Tipagem estática no \textit{Java}, language=Java, label={lst:codigo_tipagem_estatica}]
+  public class Main {
+      public static void main(String[] args) {
+          int integer = 123;
+          String string = "lorem ipsum";
+      }
+  }
+\end{lstlisting}
+}
 
-http://pastie.org/4611350
-Tipagem dinâmica no Ruby
+Já em linguagens de tipagem dinâmica, como o \textit{Ruby}, as variáveis são meras referências aos objetos, podendo estes ser de qualquer tipo existente (Código \ref{lst:codigo_tipagem_dinamica}). Linguagens com tipagem dinâmica tendem a ser mais flexíveis, dando mais liberdade ao programador.
 
-Ruby é expressivo, tem uma sintaxe simples que possibilita um código legível e elegante. Em Ruby, todas as classes são abertas, podendo ser extendidas facilmente em tempo de execução. Outro conceito muito presente nesta linguagem é a metaprogramação (código que raciocina sobre código), o que a torna muito poderosa, facilitando por exemplo a criação de DSL’s expressivas.
+{\singlespace
+\begin{lstlisting}[caption=Tipagem dinâmica no \textit{Ruby}, language=Ruby, label={lst:codigo_tipagem_dinamica}]
+  integer = 123
+  string = "lorem ipsum"
+  var = 10.50
+  var = [1, 2]
+  var = {key: "value"}
+\end{lstlisting}
+}
 
-A sintaxe direta e descomplicada da linguagem, bem próxima do inglês, torna o ato de programar menos doloroso e mais divertido. Em poucas linhas, pode-se criar uma classe e métodos de atribuição e retorno dos atributos (Código X).
+\textit{Ruby} é expressivo, sua sintaxe simples possibilita um código legível e elegante. Em \textit{Ruby}, todas as classes são abertas, podendo ser extendidas facilmente em tempo de execução. Outro conceito muito presente nesta linguagem é a metaprogramação (código que raciocina sobre código), o que torna esta muito poderosa, facilitando por exemplo a criação de DSL’s expressivas.
 
-http://pastie.org/4611208
-Exemplo de legibilidade em código Ruby.
+A sintaxe direta e descomplicada da linguagem, bem próxima do inglês, torna o ato de programar menos doloroso e mais divertido. Em poucas linhas, pode-se criar uma classe e métodos de atribuição e retorno dos atributos (Código \ref{lst:codigo_legibilidade}).
 
-No código X pode-se ver um exemplo do uso da metaprogramação. Se um método não existente for executado em uma instância da classe Car, ele será criado dinamicamente, com a funcionalidade de retornar e atribuir um atributo com o mesmo nome do método executado.
+{\singlespace
+\begin{lstlisting}[caption=Exemplo de legibilidade em código \textit{Ruby}, language=Ruby, label={lst:codigo_legibilidade}]
+  class Human
+    attr_accessor :name, :age
 
-http://pastie.org/4610877
-Metaprogramação em Ruby
+    def initialize(args = {})
+      @name = args[:name]
+      @age = args[:age]
+    end
+  end
+
+  Human.new name: 'Arya', age: 9
+\end{lstlisting}
+}
+
+Em seguida (Código \ref{lst:codigo_metaprogramacao}) pode-se ver um exemplo do uso da metaprogramação. Se um método não existente for executado em uma instância da classe \textit{Car}, ele será criado dinamicamente, com a funcionalidade de retornar e atribuir um atributo com o mesmo nome do método executado.
+
+{\singlespace
+\begin{lstlisting}[caption=Metaprogramação em \textit{Ruby}, language=Ruby, label={lst:codigo_metaprogramacao}]
+  class Car
+    def initialize(&block)
+      instance_eval(&block) if block_given?
+    end
+
+    def method_missing(method, *args)
+      method = method.to_s.chop! if method.to_s.end_with? "="
+      instance_eval <<-RUBY
+        if args.any?
+          @#{method} = args.first
+          def #{method}
+            @#{method}
+          end
+        else
+          super
+        end
+      RUBY
+    end
+  end
+
+  car = Car.new
+
+  car.color = "Black"
+  car.color # => Black
+
+  car.whatever = "chunky bacon"
+  car.whatever # => chunky bacon
+\end{lstlisting}
+}
 
 DSL (linguagem específica de domínio) é uma linguagem dedicada a resolver um tipo específico de problema, com um estrutura e sintaxe próprios para o ambiente onde ela se destina a trabalhar. Um exemplo de DSL é a linguagem SQL (Linguagem de Consulta Estruturada), que foi desenvolvida especificamente para a manipulação de bancos de dados relacionais, e não é própria para outros propósitos se não este.
 
-No códido abaixo, (Código X), pode ser observado a DSL da biblioteca de fábrica de objetos factory girl, implementada em Ruby.
+No códido abaixo, (Código \ref{lst:codigo_factory_girl}), pode ser observado a DSL da biblioteca de fábrica de objetos \textit{factory girl}, implementada em \textit{Ruby}.
 
-http://pastie.org/4598416
-DSL da biblioteca factory girl, fábrica de objetos
+{\singlespace
+\begin{lstlisting}[caption=DSL da biblioteca \textit{factory girl}, language=Ruby, label={lst:codigo_factory_girl}]
+  factory :usuario do
+    sequence(:email) { |n| "usuario%s@gmail.com" % n }
+    password '12345678'
+    nome_completo 'Linus Torvalds'
+  end
+\end{lstlisting}
+}
 
 Outra vantagem no uso desta linguagem é a quantidade disponível de ferramentas desenvolvidas pela comunidade, como frameworks e bibliotecas de teste automatizados.
 
-O uso de testes automatizados é levado muito a sério na comunidade de desenvolvedores Ruby, visto que praticamente todas as bibliotecas e frameworks disponíveis são cobertas por testes.
+O uso de testes automatizados é levado muito a sério na comunidade de desenvolvedores \textit{Ruby}, visto que praticamente todas as bibliotecas e frameworks disponíveis são cobertas por testes.
 
 
 
 
 \section{Ruby on Rails}
 
-Ruby on Rails (também escrito como RoR ou apenas Rails) \cite{RAILS}, é um framework para desenvolvimento de sistemas web, desenvolvido na linguagem Ruby. Ele foi desenvolvido para facilitar o desenvolvimento, abstraindo vários conceitos de baixo nível necessários em uma aplicação web, como a conexão com o banco de dados e o roteamento, permitindo ao desenvolvedor otimizar seu esforço ao escrever código.
+\textit{Ruby on Rails} (também escrito como \textit{RoR} ou apenas \textit{Rails}) \cite{RAILS}, é um framework para desenvolvimento de sistemas web, desenvolvido na linguagem \textit{Ruby}. Ele foi desenvolvido para facilitar o desenvolvimento, abstraindo vários conceitos de baixo nível necessários em uma aplicação web, como a conexão com o banco de dados e o roteamento, permitindo ao desenvolvedor otimizar seu esforço ao escrever código.
 
 Por framework, no contexto de desenvolvimento de software, entende-se uma coleção de módulos, ferramentas e scripts organizados de modo a abstrair algumas camadas no processo de desenvolvimento. Um framework fornece implementações já sólidas e confiáveis de partes fundamentais do sistema e ferramentas que auxiliam o trabalho do desenvolvedor, aumentando a produtividade, a qualidade e a segurança do software.
 
@@ -465,7 +540,7 @@ Dentre os principais princípios \cite{HANSSON} seguidos por este framework est�
 
 \textit{REST} \cite{FIELDING}: é um estilo de arquitetura para sistemas web que visa, dentre outras coisas, independência entre os componentes, uma menor latência nas interações, segurança e encapsulamento de sistemas legados.
 
-Nesta divisão arquitetural, os serviços do sistema são divididos por recursos e cada recurso é servido em uma URI própria. A partir daí os componentes clientes, conhecendo o endereço do recurso, podem fazer uso do mesmo através da interface genérica definida pelo REST usando os verbos HTTP. Usa-se o verbo GET para se obter uma representação do recurso no servidor, o POST para a criação de uma nova instância no servidor, o PUT para a atualização de um recurso já existente e finalmente o verbo DELETE, para a exclusão de um determinado recurso.
+Nesta divisão arquitetural, os serviços do sistema são divididos por recursos e cada recurso é servido em uma URI própria. A partir daí os componentes clientes, conhecendo o endereço do recurso, podem fazer uso do mesmo através da interface genérica definida pelo REST usando os verbos HTTP. Usa-se o verbo \textit{GET} para se obter uma representação do recurso no servidor, o \textit{POST} para a criação de uma nova instância no servidor, o \textit{PUT} para a atualização de um recurso já existente e finalmente o verbo \textit{DELETE}, para a exclusão de um determinado recurso.
 
 Além destes princípios, o Ruby on Rails segue o padrão arquitetural \textit{Model-View-Controller (MVC)} (Figura \ref{figura_23}). Este padrão divide a aplicação em três partes principais, os modelos, as visões e os controladores.
 
@@ -476,8 +551,8 @@ Além destes princípios, o Ruby on Rails segue o padrão arquitetural \textit{M
     \label{figura_23}
 \end{figure}
 
-Os modelos são as classes que realizam a persistência, a recuperação e o tratamentos dos dados utilizados pelo sistema, englobando a maior parte da lógica de negócio. No Rails, cada modelo está ligado a uma tabela no banco de dados.
+Os modelos são as classes que realizam a persistência, a recuperação e o tratamentos dos dados utilizados pelo sistema, englobando a maior parte da lógica de negócio. No \textit{Rails}, cada modelo está ligado a uma tabela no banco de dados.
 
-As visões são as interfaces de usuário, e devem conter pouca ou nenhuma lógica essencial da aplicação. No Rails as views são páginas HTML com código ruby incorporado. Na renderização da visão esse código é executado, resultando numa página HTML pura, que será enviada para o navegador do usuário.
+As visões são as interfaces de usuário, e devem conter pouca ou nenhuma lógica essencial da aplicação. No \textit{Rails} as views são páginas HTML com código \textit{ruby} incorporado. Na renderização da visão esse código é executado, resultando numa página HTML pura, que será enviada para o navegador do usuário.
 
-Os controladores são responsáveis pela roteamento das requisições da aplicação e por mudanças na interface que não dependam da lógica de negócio, como as interações simples em AJAX em abertr. Eles tratam os dados vindos das requisições, se comunicam com os modelos, repassando ou requisitando dados, e finalmente os envia para as visões.
+Os controladores são responsáveis pela roteamento das requisições da aplicação e por mudanças na interface que não dependam da lógica de negócio, como as interações simples em AJAX. Eles tratam os dados vindos das requisições, se comunicam com os modelos, repassando ou requisitando dados, e finalmente os envia para as visões.
