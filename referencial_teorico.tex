@@ -505,10 +505,10 @@ Em seguida (Código \ref{lst:codigo_metaprogramacao}) pode-se ver um exemplo do 
 
 DSL (linguagem específica de domínio) é uma linguagem dedicada a resolver um tipo específico de problema, com um estrutura e sintaxe próprios para o ambiente onde ela se destina a trabalhar. Um exemplo de DSL é a linguagem SQL (Linguagem de Consulta Estruturada), que foi desenvolvida especificamente para a manipulação de bancos de dados relacionais, e não é própria para outros propósitos se não este.
 
-No códido abaixo, (Código \ref{lst:codigo_factory_girl}), pode ser observado a DSL da biblioteca de fábrica de objetos \textit{factory girl}, implementada em \textit{Ruby}.
+No códido abaixo, (Código \ref{lst:codigo_factory_girl}), pode ser observado a DSL da biblioteca de fábrica de objetos \textit{factory\_girl}, implementada em \textit{Ruby}.
 
 {\singlespace
-\begin{lstlisting}[caption=DSL da biblioteca \textit{factory girl}, language=Ruby, label={lst:codigo_factory_girl}]
+\begin{lstlisting}[caption=DSL da biblioteca \textit{factory\_girl}, language=Ruby, label={lst:codigo_factory_girl}]
   factory :usuario do
     sequence(:email) { |n| "usuario%s@gmail.com" % n }
     password '12345678'
