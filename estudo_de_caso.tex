@@ -95,9 +95,9 @@ A proposta inicial para ferramenta NSI-BD-Tour foi a construção de uma arquite
     \label{figura_32}
 \end{figure}
 
-Entretanto, após implementada esta arquitetura pode-se verificar a dificuldade na utilização da ferramenta. Implementada desta maneira, o NSI-BD-Tour iria gerar um grande trabalho no processo de cadastro de Steps e MicroSteps, as quais são muito utilizadas devido a existência de vários passos e ações a serem executadas em um único cenário.
+Entretanto, após implementada esta arquitetura pode-se verificar a dificuldade na utilização da ferramenta. Implementada desta maneira, o NSI-BD-Tour iria gerar um grande trabalho no processo de cadastro de \textit{Steps} e \textit{MicroSteps}, as quais são muito utilizadas devido a existência de vários passos e ações a serem executadas em um único cenário.
 
-Com este problema, foi realizado um refatoramento que levou a descoberta de uma biblioteca da linguagem Ruby (Hashr) que facilitou uma nova arquitetura. A biblioteca Hashr cria uma nova classe derivada da classe Hash (estrutura de dicionário), que simplifica o acesso aos valores de dicionários aninhados \cite{HASHR}. O Código \ref{lst:codigo36} exemplifica o uso desta estrutura.
+Com este problema, foi realizado um refatoramento que levou a descoberta de uma biblioteca da linguagem \textit{Ruby} (\textit{Hashr}) que facilitou uma nova arquitetura. A biblioteca \textit{Hashr} cria uma nova classe derivada da classe \textit{Hash} (estrutura de dicionário), que simplifica o acesso aos valores de dicionários aninhados \cite{HASHR}. O Código \ref{lst:codigo36} exemplifica o uso desta estrutura.
 
 {\singlespace
 \begin{lstlisting}[caption=Exemplo de uso da estrutura \textit{Hashr},label={lst:codigo36}]
@@ -111,11 +111,11 @@ monografia.autor_2 # => 'Natanael'
 \end{lstlisting}
 }
 
-A linha 1 do código acima, cria uma instância da classe Hashr. Pode-se verificar que o parâmetro recebido é um dicionário nativo (Hash). Após criado o objeto, é possivel visualizar nas linhas 4, 5 e 6 as vantagens da utilização desta biblioteca. Os valores podem ser acessados diretamente pelo valor da chave, como atributos.
+A linha 1 do código acima, cria uma instância da classe \textit{Hashr}. Pode-se verificar que o parâmetro recebido é um dicionário nativo (\textit{Hash}). Após criado o objeto, é possivel visualizar nas linhas 4, 5 e 6 as vantagens da utilização desta biblioteca. Os valores podem ser acessados diretamente pelo valor da chave, como atributos.
 
 Através das vantagens descobertas, foi possível fazer a simplificação da entrada de dados para o cadastro e gerenciamento dos cenários, utilizando o formato de serialização de dados YAML, o qual permite descrever em forma textual todos os dados necessários para ferramenta funcionar, eliminando a necessidade de preencher vários formulários.
 
-Por fim, após toda a estrutura de dados criada, será necessário criar a interface de interação com usuário, utilizando a biblioteca Amberjack2 e jQuery. Desta maneira, o cenário poderá ser executado, realizando na validação e treinamento do usuário.
+Por fim, após toda a estrutura de dados criada, será necessário criar a interface de interação com usuário, utilizando a biblioteca \textit{Amberjack2} e jQuery. Desta maneira, o cenário poderá ser executado, realizando na validação e treinamento do usuário.
 
 \section{Funcionalidades desenvolvidas}
 
@@ -125,7 +125,7 @@ Nesta seção serão descritas as funcionalidades especificadas para o desenvolv
 
 O objetivo desta funcionalidade é permitir o usuário descrever os cenários em uma linguagem simples - formato YAML. O cenário descrito será utilizado para validar e guiar o usuário no emprego do sistema. Na implementação dessa funcionalidade, foi criado um cadastro de cenários, onde há um campo de texto em que o usuário pode descrever o cenário.
 
-Para implementar esta funcionalidade, utilizou-se de um recurso disponibilizado pelo framework (Rails) no qual a Biblioteca Digital é desenvolvida. O Código \ref{lst:codigo42} representa o comando utilizado para criar o modelo definido.
+Para implementar esta funcionalidade, utilizou-se de um recurso disponibilizado pelo \textit{framework} (\textit{Rails}) no qual a Biblioteca Digital é desenvolvida. O Código \ref{lst:codigo42} representa o comando utilizado para criar o modelo definido.
 
 {\singlespace
 \begin{lstlisting}[caption=Comando para gerar um modelo,label={lst:codigo42}]
@@ -133,7 +133,7 @@ $ rails generate scaffold Scenario yaml:text
 \end{lstlisting}
 }
 
-Após executar o comando, é criada uma classe Scenario com o atributo yaml, a qual será responsável pela manipulação dos cenários do sistema. Além disso, este comando também gera toda interface de gerenciamento para o usuário.
+Após executar o comando, é criada uma classe \textit{Scenario} com o atributo yaml, a qual será responsável pela manipulação dos cenários do sistema. Além disso, este comando também gera toda interface de gerenciamento para o usuário.
 
 Uma limitação desta funcionalidade ainda não abordada é a validação do formato do texto inserido pelo usuário. Caso o cenário inserido não atenda ao padrão, poderá comprometer o funcionamento da ferramenta.
 
@@ -141,7 +141,7 @@ Uma limitação desta funcionalidade ainda não abordada é a validação do for
 
 Através do cadastro de cenários (funcionalidade F01) o usuário poderá cadastrá-los, utilizando o formato YAML. Porém o cenário está descrito em forma textual, e precisa ser processado para a extração das informações necessárias para o funcionamento da ferramenta. O objetivo da análise e extração de dados do YAML é obter os atributos necessários para renderização no navegador.
 
-Para converter o YAML em uma estrutura manipulável, foi utilizada a biblioteca Psych \cite{PSYCH}. Esta biblioteca fornece uma maneira simples de se transformar um texto em formato YAML para uma estrutura nativa do Ruby, composta por dicionários, listas e valores simples (Código \ref{lst:codigo38}).
+Para converter o YAML em uma estrutura manipulável, foi utilizada a biblioteca \textit{Psych} \cite{PSYCH}. Esta biblioteca fornece uma maneira simples de se transformar um texto em formato YAML para uma estrutura nativa do \textit{Ruby}, composta por dicionários, listas e valores simples (Código \ref{lst:codigo38}).
 
 {\singlespace
 \begin{lstlisting}[caption=Exemplo de cenário escrito em \textit{YAML},label={lst:codigo38}]
@@ -167,13 +167,13 @@ contexts:
         action: click
 YAML
 
-puts Psych.load(yaml)
+cenario = Psych.load(yaml)
 \end{lstlisting}
 }
 
-Nas linhas 3-X foi definido um texto em formato YAML, o qual será convertido para uma estrutura manipulável e nativa da linguagem Ruby utilizando a biblioteca Psych (linha X).
+Nas linhas 3-21 foi definido um texto em formato YAML, o qual será convertido para uma estrutura manipulável e nativa da linguagem \textit{Ruby} utilizando a biblioteca \textit{Psych} (linha 23).
 
-Por fim, para implementar esta funcionalidade, foi desenvolvido um método responsável pela conversão dos dados obtidos do cenário textual, para estrutura Hashr. A classe Scenario, criada na funcionalidade F01, receberá o método (Código \ref{lst:codigo37}) que possibilitará o NSI-BD-Tour converter todos os cenários uma estrutura que facilita o acesso aos valores dos atributos.
+Por fim, para implementar esta funcionalidade, foi desenvolvido um método responsável pela conversão dos dados obtidos do cenário textual, para estrutura \textit{Hashr}. A classe \textit{Scenario}, criada na funcionalidade F01, receberá o método (Código \ref{lst:codigo37}) que possibilitará o NSI-BD-Tour converter todos os cenários uma estrutura que facilita o acesso aos valores dos atributos.
 
 {\singlespace
 \begin{lstlisting}[caption=Método de conversão para \textit{Hashr},label={lst:codigo37}]
@@ -189,11 +189,11 @@ end
 \end{lstlisting}
 }
 
-Na linha 3 do Código \ref{lst:codigo37}, foi criado um laço recursivo, que irá converter todos os dicionários presentes na estrutura convertida pela biblioteca Psych (Código \ref{lst:codigo38}, linha X). Assim, todos os valores do cenário poderão ser acessados como atributos.
+No código \ref{lst:codigo37}, foi criado um laço recursivo, que irá converter todos os dicionários presentes na estrutura convertida pela biblioteca \textit{Psych} (Código \ref{lst:codigo38}, linha 3). Assim, todos os valores do cenário poderão ser acessados diretamente como atributos.
 
 \textbf{F03.} Renderização do cenário
 
-A renderização do cenário tem como objetivo fornecer todos os dados necessários para que a biblioteca Amberjack2 possa criar e conduzir os cenários pré-cadastrados. Quando um usuário iniciar a execução de um cenário, todos os atributos devem estar na estrutura HTML interpretada pela biblioteca Amberjack2. Assim todas páginas correspondentes a cada cenário devem conter este trecho de código descrito abaixo.
+A renderização do cenário tem como objetivo fornecer todos os dados necessários para que a biblioteca \textit{Amberjack2} possa criar e conduzir os cenários pré-cadastrados. Quando um usuário iniciar a execução de um cenário, todos os atributos devem estar na estrutura HTML interpretada pela biblioteca \textit{Amberjack2}. Assim todas páginas correspondentes a cada cenário devem conter este trecho de código descrito abaixo.
 
 {\singlespace
 \begin{lstlisting}[caption=Cenário descrito em \textit{HTML} para biblioteca \textit{Amberjack2},language=HTML,label={lst:codigo40}]
@@ -211,7 +211,7 @@ A renderização do cenário tem como objetivo fornecer todos os dados necessár
 \end{lstlisting}
 }
 
-O Código \ref{lst:codigo40} tem sua visualização oculta para usuário e é de uso interno da biblioteca (seção \ref{sec:amberjack}). Para ocultá-lo foi utilizada a condição da existência do parâmetro de inicialização do Amberjack2 (Código \ref{lst:codigo43}). Com isso, o trecho de código HTML estará na página quando realmente for chamado.
+O Código \ref{lst:codigo40} tem sua visualização oculta para usuário e é de uso interno da biblioteca (seção \ref{sec:amberjack}). Para ocultá-lo foi utilizada a condição da existência do parâmetro de inicialização do \textit{Amberjack2} (Código \ref{lst:codigo43}). Com isso, o trecho de código HTML estará na página quando realmente for chamado.
 
 {\singlespace
 \begin{lstlisting}[caption=Método para carregar o cenário,label={lst:codigo43}]
@@ -225,22 +225,22 @@ end
 \end{lstlisting}
 }
 
-O Código \ref{lst:codigo43} pertence a classe ApplicationController (classe pai de todos os controllers do framework Rails). A linha 1, define a obrigatoriedade de execução do método \textit{$load\_scenario$} antes de qualquer renderização. Já na linha 4, é feita verificação da existência do parâmetro. Assim, a ferramenta poderá saber qual o cenário está sendo utilizado (linha 5).
+O Código \ref{lst:codigo43} pertence a classe \textit{ApplicationController} (classe pai de todos os controllers do \textit{framework Rails}). A linha 1, define a obrigatoriedade de execução do método \textit{$load\_scenario$} antes de qualquer renderização. Já na linha 4, é feita verificação da existência do parâmetro. Assim, a ferramenta poderá saber qual o cenário está sendo utilizado (linha 5).
 
 No entanto, foi detectado um problema ao passar as etapas dos cenários que sofrerem um evento do tipo redirect\footnotemark[1], por exemplo a submissão de um formulário. Neste caso, o redirect causa a perda do parâmetro na URL, deste modo a ferramenta será interrompida, devido a falta do escopo de execução.
 
-A solução para este problema foi a utilização cookies\footnotemark[2]. Ao iniciar o cenário, um cookie é criado para identificar qual o cenário em execução (Código \ref{lst:codigo43}, linha 6). Deste modo, o redirect não será mais um problema, e a biblioteca Amberjack2 poderá verificar a existência do cookie e continuar executando a ferramenta.
+A solução para este problema foi a utilização \textit{cookies}\footnotemark[2]. Ao iniciar o cenário, um cookie é criado para identificar qual o cenário em execução (Código \ref{lst:codigo43}, linha 6). Deste modo, o redirect não será mais um problema, e a biblioteca Amberjack2 poderá verificar a existência do \textit{cookie} e continuar executando a ferramenta.
 
-A funcionalidade F04, descrita a seguir, irá demonstrar os passos executados para implementação do gerenciamento de cookies.
+A funcionalidade F04, descrita a seguir, irá demonstrar os passos executados para implementação do gerenciamento de \textit{cookies}.
 
 \footnotetext[1]{Redirect é uma técnica onde é possível direcionar o acesso a outro endereço.}
 \footnotetext[2]{Cookie é um grupo de dados trocados entre o navegador e o servidor. Estes dados são armazenados em um arquivo no computador do cliente.}
 
 \textbf{F04.} Gerenciamento de cookies
 
-O gerenciamento de cookies ficou sob a responsabilidade do Amberjack2 e do framework da Biblioteca Digital. A primeira requisição com o parâmetro na URL é responsável por iniciar a execução de um cenário e criar um cookie com os dados necessários para o Amberjack2 identificar o cenário (Código \ref{lst:codigo43}, linha 7). Os cookies ficam persistidos no navegador, eliminando a necessidade da passagem de quaisquer parâmetros relativos ao cenário executado.
+O gerenciamento de cookies ficou sob a responsabilidade do \textit{Amberjack2} e do framework da Biblioteca Digital. A primeira requisição com o parâmetro na URL é responsável por iniciar a execução de um cenário e criar um cookie com os dados necessários para o \textit{Amberjack2} identificar o cenário (Código \ref{lst:codigo43}, linha 7). Os \textit{cookies} ficam persistidos no navegador, eliminando a necessidade da passagem de quaisquer parâmetros relativos ao cenário executado.
 
-Após iniciado o cenário, todo o gerenciamento de cookies será de responsabilidade do Amberjack2. Para isso foi necessário adicionar métodos de gerenciamento de cookies a biblioteca. Estes métodos foram aproveitados de um ferramenta livre, collective.amberjack \cite{REDTURTLE}, a qual também utiliza o Amberjack2. No Apêndice X, encontra-se o código com está funcionalidade.
+Após iniciado o cenário, todo o gerenciamento de cookies será de responsabilidade do \textit{Amberjack2}. Para isso foi necessário adicionar métodos para o gerenciamento de cookies à biblioteca. Estes métodos foram aproveitados de um ferramenta livre, collective.amberjack \cite{REDTURTLE}, a qual também utiliza o \textit{Amberjack2}. No Apêndice X, encontra-se o código como está funcionalidade.
 
 \textbf{F05.} Simular a interação entre o usuário e a aplicação
 
