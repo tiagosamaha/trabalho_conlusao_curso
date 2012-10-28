@@ -1,0 +1,101 @@
+scenario: Busca avançada no acervo
+
+contexts:
+
+    - url: http://amberjack-bd.dev/
+      steps:
+          - description:
+              A Biblioteca Digital disponibiliza um acervo
+              de documentos produzidos pela rede de Instituições
+              de Educação Profissional Científica e Tecnológica.
+              Esses documentos são de livre acesso para consulta.
+            element: bd_epct
+            padding: 5
+            position: rmb
+
+          - description:
+              Para realizar uma busca no acervo, recomenda-se
+              utilizar a busca avançada.
+              Para acessar o formulário de busca, clique no
+              botão 'executar'.
+            element: busca
+            action: click
+            padding: 5
+            position: rmb
+
+    - url: http://amberjack-bd.dev/buscas
+      steps:
+          - description:
+              O formulário de busca fornece vários critérios
+              de pesquisa. Siga os passos para realizar um exemplo.
+            element: titulo_busca_avancada
+            padding: 5
+            position: rmb
+
+          - description:
+              Vamos buscar um documento com o título
+              'Documentação Executável'.
+              Clique no botão executar.
+            element: parametros_nome
+            action: type
+            value: Documentação Executável
+            padding: 5
+            position: rmb
+
+          - description:
+              O documento buscado pertence a área de
+              'Ciências Exatas e da Terra'.
+              Clique no botão executar para selecioná-la.
+            element: area
+            action: select
+            value: Ciências Exatas e da Terra
+            padding: 5
+            position: rmb
+
+          - description:
+              A sub-área deste documento é
+              'Ciência da Computação'. Execute a ação.
+            element: sub_area_busca_avancada
+            action: select
+            value: Ciência da Computação
+            padding: 5
+            position: rmb
+
+          - description:
+              Pode-se escolher o tipo de conteúdo
+              desejado para busca.
+            element: tipos_de_conteudo
+            padding: 5
+            position: rmb
+
+          - description: Nosso documento é um 'Trabalho de Obtenção de Grau'.
+            element: label_trabalho_de_obtencao_de_grau
+            action: click
+            padding: 5
+            position: rmb
+
+          - description: Para buscar clique em executar.
+            element: busca_submit
+            action: click
+            padding: 5
+            position: tcc
+
+    - url: http://amberjack-bd.dev/busca_avancada
+      steps:
+          - description:
+              Esta página retorna os resultados da busca.
+              Podemos perceber que nosso documento foi encontrado.
+              Clique em 'executar' para acessá-lo.
+            element: link_conteudo_2
+            action: click
+            padding: 5
+            position: rmb
+
+    - url: http://amberjack-bd.dev/conteudos/2
+      steps:
+          - description:
+              Por fim, nesta tela é possível visualizar
+              detalhadamente o conteúdo buscado.
+            element: content
+            padding: 5
+            position: tcc
