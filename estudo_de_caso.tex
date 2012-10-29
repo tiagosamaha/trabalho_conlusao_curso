@@ -21,6 +21,8 @@ Assim, pode-se destacar como vantagens da implantação a otimização do uso do
 
 Outra vantagem esperada é a validação dos cenários, onde todos os passos executados foram pré-definidos pela especificação do cliente. Desta maneira pode-se validar interativamente todos os cenários descritos.
 
+Deve-se deixar claro que a utilização da NSI-BD-Tour para a validação de cenários não substitui os testes de aceitação utilizados pelo programador, visto que usuários alvo desta ferramenta são os clientes e usuários finais do sistema.
+
 A partir da utilização da documentação interativa, os usuários poderão ser facilmente treinados nas funcionalidades da Biblioteca Digital, sem a necessidade de uma tutoria dedicada.
 
 \section{Desenvolvimento}
@@ -173,6 +175,9 @@ cenario = Psych.load(yaml)
 
 Nas linhas 3-21 foi definido um texto em formato YAML, o qual será convertido para uma estrutura manipulável e nativa da linguagem \textit{Ruby} utilizando a biblioteca \textit{Psych} (linha 23).
 
+Em vez da classe nativa \textit{Hash}, será usada a classe \textit{Hashr} para os dicionários. Porém, um problema que ocorre na conversão entre esses tipos, é que os dicionários que estiverem dentro de listas não serão automaticamente convertidos como ocorreria se ele estivessem diretamente ligados ao dicionário a ser convertido.
+
+
 Por fim, para implementar esta funcionalidade, foi desenvolvido um método responsável pela conversão dos dados obtidos do cenário textual, para estrutura \textit{Hashr}. A classe \textit{Scenario}, criada na funcionalidade F01, receberá o método (Código \ref{lst:codigo37}) que possibilitará o NSI-BD-Tour converter todos os cenários uma estrutura que facilita o acesso aos valores dos atributos.
 
 {\singlespace
@@ -188,6 +193,8 @@ def convert_to_hashr(hash)
 end
 \end{lstlisting}
 }
+
+O método mostrado no código \ref{lst:codigo37} cria um objeto \textit{Hashr} local a partir do dicionário recebido como parâmetro. Em seguida, ele itera (linha 3) sobre os valores deste dicionário \textit{Hashr} enquanto verifica se algum deles é uma lista (instância da classe \textit{Array}). Caso algum destes objetos seja uma lista, o método verifica cada valor contido da mesma, e caso algum deles seja uma instância da classe \textit{Hash}, ele converte o mesmo para \texit{Hashr} chamando o próprio método recursivamente (linha 5).
 
 No código \ref{lst:codigo37}, foi criado um laço recursivo, que irá converter todos os dicionários presentes na estrutura convertida pela biblioteca \textit{Psych} (Código \ref{lst:codigo38}, linha 3). Assim, todos os valores do cenário poderão ser acessados diretamente como atributos.
 
