@@ -21,7 +21,7 @@ Assim, pode-se destacar como vantagens da implantação a otimização do uso do
 
 Outra vantagem esperada é a validação dos cenários, onde todos os passos executados foram pré-definidos pela especificação do cliente. Desta maneira pode-se validar interativamente todos os cenários descritos.
 
-Deve-se deixar claro que a utilização da NSI-BD-Tour para a validação de cenários não substitui os testes de aceitação utilizados pelo programador, visto que usuários alvo desta ferramenta são os clientes e usuários finais do sistema.
+Deve-se deixar claro que a utilização da NSI-BD-Tour para a validação de cenários não substitui os testes de aceitação utilizados pelo programador, visto que os usuários alvo desta ferramenta são os clientes e usuários finais do sistema.
 
 A partir da utilização da documentação interativa, os usuários poderão ser facilmente treinados nas funcionalidades da Biblioteca Digital, sem a necessidade de uma tutoria dedicada.
 
@@ -118,6 +118,65 @@ A linha 1 do código acima, cria uma instância da classe \textit{Hashr}. Pode-s
 Através das vantagens descobertas, foi possível fazer a simplificação da entrada de dados para o cadastro e gerenciamento dos cenários, utilizando o formato de serialização de dados YAML, o qual permite descrever em forma textual todos os dados necessários para ferramenta funcionar, eliminando a necessidade de preencher vários formulários.
 
 Por fim, após toda a estrutura de dados criada, será necessário criar a interface de interação com usuário, utilizando a biblioteca \textit{Amberjack2} e jQuery. Desta maneira, o cenário poderá ser executado, realizando na validação e treinamento do usuário.
+
+Foi previamente definido um padrão na descrição do cenário em formato YAML, com o objetivo de tornar possível a análise e extração de todas as informações necessários para a ferramenta. No exemplo seguinte pode se observar os primeiros três passos de um cenário válido em YAML utilizado nos testes da ferramenta (Código \ref{lst:codigo_cenario_yaml}).
+
+{\singlespace
+\begin{lstlisting}[caption=Cenário descrito em YAML,language=Bash,label={lst:codigo_cenario_yaml}]
+scenario: Busca avançada no acervo
+
+contexts:
+    - url: http://amberjack-bd.dev/
+      steps:
+          - description:
+              A Biblioteca Digital disponibiliza um acervo
+              de documentos produzidos pela rede de Instituições
+              de Educação Profissional Científica e Tecnológica.
+              Esses documentos são de livre acesso para consulta.
+            element: bd_epct
+            padding: 5
+            position: rmb
+
+          - description:
+              Para realizar uma busca no acervo, recomenda-se
+              utilizar a busca avançada.
+              Para acessar o formulário de busca, clique no
+              botão 'executar'.
+            element: busca
+            action: click
+            padding: 5
+            position: rmb
+
+    - url: http://amberjack-bd.dev/buscas
+      steps:
+          - description:
+              O formulário de busca fornece vários critérios
+              de pesquisa. Siga os passos para realizar um exemplo.
+            element: titulo_busca_avancada
+            padding: 5
+            position: rmb
+\end{lstlisting}
+}
+
+Todos os passos necessários para a execução de uma funcionalidade são agrupados por contextos, cada contexto representa um endereço de uma página do sistema. Desta maneira, todos os passos que devem ser executadas em uma mesma página ficam em um mesmo contexto.
+
+O endereço de cada contexto deve ser definido de maneira indentada dentro do nível \textit{contexts}, conforme descrito nas linhas 4 e 25. Dentro da definição do contexto, declara-se um nível \textit{steps} para a declaração dos passos (linha 5 e 26).
+
+A definição de um passo pode conter vários atributos, a saber:
+
+\begin{itemize}
+\item \textit{description}: a descrição do passo, com alguma informação sobre o passo para o usuário.
+
+\item \textit{element}: o \textit{id} do elemento HTML referente ao passo.
+
+\item \textit{padding}: o tamanho do foco visual que o elemento HTML receberá. Elementos muito pequenos, como ícones, ficam mais visíveis com um foco maior.
+
+\item \textit{padding}: posição do balão-guia do tutorial em relação ao elemento.
+
+\item \textit{padding}: ação que deverá ser simulada no elemento. Pode receber valores como \textit{click} (ação de clique com o mouse), \textit{choose} (escolher um \textit{radio-button}), \textit{select} (escolher uma opção em um campo \textit{select}) e \textit{type} (digitar em algum campo de texto).
+
+\end{itemize}
+
 
 \section{Funcionalidades desenvolvidas}
 
@@ -247,7 +306,7 @@ A funcionalidade F04, descrita a seguir, irá demonstrar os passos executados pa
 
 O gerenciamento de /textit{cookies} ficou sob a responsabilidade do \textit{Amberjack2} e do framework da Biblioteca Digital. A primeira requisição com o parâmetro na URL é responsável por iniciar a execução de um cenário e criar um \textit{cookie} com os dados necessários para o \textit{Amberjack2} identificar o cenário (Código \ref{lst:codigo43}, linha 7). Os \textit{cookies} ficam persistidos no navegador, eliminando a necessidade da passagem de quaisquer parâmetros relativos ao cenário executado.
 
-Após iniciado o cenário, todo o gerenciamento de cookies será de responsabilidade do \textit{Amberjack2}. Para isso foi necessário adicionar métodos para o gerenciamento de cookies à biblioteca. Estes métodos foram aproveitados de um ferramenta livre, collective.amberjack \cite{REDTURTLE}, a qual também utiliza o \textit{Amberjack2}. No Apêndice X, encontra-se o código como está funcionalidade.
+Após iniciado o cenário, todo o gerenciamento de cookies será de responsabilidade do \textit{Amberjack2}. Para isso foi necessário adicionar métodos para o gerenciamento de \textit{cookies} à biblioteca. Estes métodos foram aproveitados de um ferramenta livre, collective.amberjack \cite{REDTURTLE}, a qual também utiliza o \textit{Amberjack2}. No Apêndice X, encontra-se o código como está funcionalidade.
 
 \textbf{F05.} Simular a interação entre o usuário e a aplicação
 
@@ -269,6 +328,8 @@ select: function(element, value) {
 },
 \end{lstlisting}
 }
+
+Acima (Código \ref{lst:codigo41}) foi implementado uma função de nome \textit{select} que tem como objetivo simular a ação do usuário de escolher um valor em um campo do tipo \textit{select}. Esta função recebe o \textit{id} do elemento HTML e o valor a ser selecionado (linha 1). Quando executada, esta função percorre (linha 3) as opções disponíveis no elemento, quando o valor corrente for igual ao recebido por parâmetro, ele é selecionado (linha 5). Por fim, é disparado um evento de mudança no elemento (linha 6).
 
 Entretanto, este projeto ainda está em andamento, faltando ainda implementar a ação de escolha de um campo \textit{radio}.
 
