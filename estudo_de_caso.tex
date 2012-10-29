@@ -194,7 +194,7 @@ end
 \end{lstlisting}
 }
 
-O método mostrado no código \ref{lst:codigo37} cria um objeto \textit{Hashr} local a partir do dicionário recebido como parâmetro. Em seguida, ele itera (linha 3) sobre os valores deste dicionário \textit{Hashr} enquanto verifica se algum deles é uma lista (instância da classe \textit{Array}). Caso algum destes objetos seja uma lista, o método verifica cada valor contido da mesma, e caso algum deles seja uma instância da classe \textit{Hash}, ele converte o mesmo para \texit{Hashr} chamando o próprio método recursivamente (linha 5).
+O método mostrado no código \ref{lst:codigo37} cria um objeto \textit{Hashr} local a partir do dicionário recebido como parâmetro. Em seguida, ele itera (linha 3) sobre os valores deste dicionário \textit{Hashr} enquanto verifica se algum deles é uma lista (instância da classe \textit{Array}). Caso algum destes objetos seja uma lista, o método verifica cada valor contido da mesma, e caso algum deles seja uma instância da classe \textit{Hash}, ele converte o mesmo para \textit{Hashr} chamando o próprio método recursivamente (linha 5).
 
 No código \ref{lst:codigo37}, foi criado um laço recursivo, que irá converter todos os dicionários presentes na estrutura convertida pela biblioteca \textit{Psych} (Código \ref{lst:codigo38}, linha 3). Assim, todos os valores do cenário poderão ser acessados diretamente como atributos.
 
@@ -232,20 +232,20 @@ end
 \end{lstlisting}
 }
 
-O Código \ref{lst:codigo43} pertence a classe \textit{ApplicationController} (classe pai de todos os controllers do \textit{framework Rails}). A linha 1, define a obrigatoriedade de execução do método \textit{$load\_scenario$} antes de qualquer renderização. Já na linha 4, é feita verificação da existência do parâmetro. Assim, a ferramenta poderá saber qual o cenário está sendo utilizado (linha 5).
+O Código \ref{lst:codigo43} pertence a classe \textit{ApplicationController} (classe pai de todos os /textit{controllers} do \textit{framework Rails}). A linha 1, define a obrigatoriedade de execução do método \textit{$load\_scenario$} antes de qualquer renderização. Já na linha 4, é feita verificação da existência do parâmetro. Assim, a ferramenta poderá saber qual o cenário está sendo utilizado (linha 5).
 
-No entanto, foi detectado um problema ao passar as etapas dos cenários que sofrerem um evento do tipo redirect\footnotemark[1], por exemplo a submissão de um formulário. Neste caso, o redirect causa a perda do parâmetro na URL, deste modo a ferramenta será interrompida, devido a falta do escopo de execução.
+No entanto, foi detectado um problema ao passar as etapas dos cenários que sofrerem um evento do tipo redirect\footnotemark[1], por exemplo a submissão de um formulário. Neste caso, o \textit{redirect} causa a perda do parâmetro na URL, deste modo a ferramenta será interrompida, devido a falta do escopo de execução.
 
-A solução para este problema foi a utilização \textit{cookies}\footnotemark[2]. Ao iniciar o cenário, um cookie é criado para identificar qual o cenário em execução (Código \ref{lst:codigo43}, linha 6). Deste modo, o redirect não será mais um problema, e a biblioteca Amberjack2 poderá verificar a existência do \textit{cookie} e continuar executando a ferramenta.
+A solução para este problema foi a utilização \textit{cookies}\footnotemark[2]. Ao iniciar o cenário, um /texti{cookie} é criado para identificar qual o cenário em execução (Código \ref{lst:codigo43}, linha 6). Deste modo, o \textit{redirect} não será mais um problema, e a biblioteca \textit{Amberjack2} poderá verificar a existência do \textit{cookie} e continuar executando a ferramenta.
 
 A funcionalidade F04, descrita a seguir, irá demonstrar os passos executados para implementação do gerenciamento de \textit{cookies}.
 
 \footnotetext[1]{Redirect é uma técnica usada para direcionar o acesso a outro endereço.}
 \footnotetext[2]{Cookie é um grupo de dados trocados entre o navegador e o servidor. Estes dados são armazenados em um arquivo no computador do cliente.}
 
-\textbf{F04.} Gerenciamento de cookies
+\textbf{F04.} Gerenciamento de \textit{cookies}
 
-O gerenciamento de cookies ficou sob a responsabilidade do \textit{Amberjack2} e do framework da Biblioteca Digital. A primeira requisição com o parâmetro na URL é responsável por iniciar a execução de um cenário e criar um cookie com os dados necessários para o \textit{Amberjack2} identificar o cenário (Código \ref{lst:codigo43}, linha 7). Os \textit{cookies} ficam persistidos no navegador, eliminando a necessidade da passagem de quaisquer parâmetros relativos ao cenário executado.
+O gerenciamento de /textit{cookies} ficou sob a responsabilidade do \textit{Amberjack2} e do framework da Biblioteca Digital. A primeira requisição com o parâmetro na URL é responsável por iniciar a execução de um cenário e criar um \textit{cookie} com os dados necessários para o \textit{Amberjack2} identificar o cenário (Código \ref{lst:codigo43}, linha 7). Os \textit{cookies} ficam persistidos no navegador, eliminando a necessidade da passagem de quaisquer parâmetros relativos ao cenário executado.
 
 Após iniciado o cenário, todo o gerenciamento de cookies será de responsabilidade do \textit{Amberjack2}. Para isso foi necessário adicionar métodos para o gerenciamento de cookies à biblioteca. Estes métodos foram aproveitados de um ferramenta livre, collective.amberjack \cite{REDTURTLE}, a qual também utiliza o \textit{Amberjack2}. No Apêndice X, encontra-se o código como está funcionalidade.
 
@@ -335,7 +335,7 @@ end
 \end{lstlisting}
 }
 
-A cobertura de testes atumatizados das \textit{views} foram desenvolvidas para verificar se o conteúdo é corretamente apresentado ao usuário na página (Código \ref{lst:codigo34}).
+A cobertura de testes automatizados das \textit{views} foram desenvolvidas para verificar se o conteúdo é corretamente apresentado ao usuário na página (Código \ref{lst:codigo34}).
 
 {\singlespace
 \begin{lstlisting}[caption=Teste unitário de \textit{view},label={lst:codigo34}]
