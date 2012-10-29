@@ -74,20 +74,6 @@ O resultado de execução do código acima pode ser visto na Figura \ref{figura_
 
 Além da utilização desta biblioteca de testes, foi utilizado o conceito de "passos de bebê", ou seja, pequenas partes são desenvolvidas a cada momento, seja levantamento de requisitos, implementação de funcionalidade, refatoração ou até especificações. Um exemplo disto é focar no desenvolvimento de uma pequena parte de uma funcionalidade, diminuindo o risco do desenvolvimento e assegurando o atingimento de objetivos alcançaveis \cite{RODRIGO}.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 \section{Arquitetura da ferramenta}
 
 A proposta inicial para ferramenta NSI-BD-Tour foi a construção de uma arquitetura onde os elementos constituintes eram o cenário (funcionalidade), passos (etapas) e ações (executas em cada passo), os quais se relacionavam conforme o modelo apresentado na Figura \ref{figura_32}.
@@ -160,7 +146,7 @@ contexts:
 \end{lstlisting}
 }
 
-Todos os passos necessários para a execução de uma funcionalidade são agrupados por contextos, cada contexto representa um endereço de uma página do sistema. Desta maneira, todos os passos que devem ser executadas em uma mesma página ficam em um mesmo contexto.
+Todos os passos necessários para a execução de uma funcionalidade são agrupados por contextos, cada contexto representa um endereço de uma página do sistema (código completo no Apêndice \ref{apendice}). Desta maneira, todos os passos que devem ser executadas em uma mesma página ficam em um mesmo contexto.
 
 O endereço de cada contexto deve ser definido de maneira indentada dentro do nível \textit{contexts}, conforme descrito nas linhas 4 e 25. Dentro da definição do contexto, declara-se um nível \textit{steps} para a declaração dos passos (linha 5 e 26).
 
