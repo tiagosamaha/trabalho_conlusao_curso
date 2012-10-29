@@ -1,23 +1,26 @@
-scenario: Busca avançada no acervo
+\apendice \chapter{Primeiro anexo}
+
+{\singlespace
+\begin{lstlisting}[caption=Cenário descrito em YAML,language=bash,label={lst:anexo_yaml}]
+scenario: Busca avancada no acervo
 
 contexts:
-
     - url: http://amberjack-bd.dev/
       steps:
           - description:
               A Biblioteca Digital disponibiliza um acervo
-              de documentos produzidos pela rede de Instituições
-              de Educação Profissional Científica e Tecnológica.
-              Esses documentos são de livre acesso para consulta.
+              de documentos produzidos pela rede de Instituicoes
+              de Educacao Profissional Cientifica e Tecnologica.
+              Esses documentos sao de livre acesso para consulta.
             element: bd_epct
             padding: 5
             position: rmb
 
           - description:
               Para realizar uma busca no acervo, recomenda-se
-              utilizar a busca avançada.
-              Para acessar o formulário de busca, clique no
-              botão 'executar'.
+              utilizar a busca avancada.
+              Para acessar o formulario de busca, clique no
+              botao 'executar'.
             element: busca
             action: click
             padding: 5
@@ -26,7 +29,7 @@ contexts:
     - url: http://amberjack-bd.dev/buscas
       steps:
           - description:
-              O formulário de busca fornece vários critérios
+              O formulario de busca fornece varios criterios
               de pesquisa. Siga os passos para realizar um exemplo.
             element: titulo_busca_avancada
             padding: 5
@@ -34,30 +37,30 @@ contexts:
 
           - description:
               Vamos buscar um documento com o título
-              'Documentação Executável'.
-              Clique no botão executar.
+              'Documentacao Executavel'.
+              Clique no botao executar.
             element: parametros_nome
             action: type
-            value: Documentação Executável
+            value: Documentacao Executavel
             padding: 5
             position: rmb
 
           - description:
-              O documento buscado pertence a área de
-              'Ciências Exatas e da Terra'.
-              Clique no botão executar para selecioná-la.
+              O documento buscado pertence a area de
+              'Ciencias Exatas e da Terra'.
+              Clique no botao executar para seleciona-la.
             element: area
             action: select
-            value: Ciências Exatas e da Terra
+            value: Ciencias Exatas e da Terra
             padding: 5
             position: rmb
 
           - description:
-              A sub-área deste documento é
-              'Ciência da Computação'. Execute a ação.
+              A sub-area deste documento e
+              'Ciencia da Computacao'. Execute a acao.
             element: sub_area_busca_avancada
             action: select
-            value: Ciência da Computação
+            value: Ciencia da Computacao
             padding: 5
             position: rmb
 
@@ -68,7 +71,7 @@ contexts:
             padding: 5
             position: rmb
 
-          - description: Nosso documento é um 'Trabalho de Obtenção de Grau'.
+          - description: Nosso documento e um 'Trabalho de Obtencao de Grau'.
             element: label_trabalho_de_obtencao_de_grau
             action: click
             padding: 5
@@ -83,9 +86,9 @@ contexts:
     - url: http://amberjack-bd.dev/busca_avancada
       steps:
           - description:
-              Esta página retorna os resultados da busca.
+              Esta pagina retorna os resultados da busca.
               Podemos perceber que nosso documento foi encontrado.
-              Clique em 'executar' para acessá-lo.
+              Clique em 'executar' para acessa-lo.
             element: link_conteudo_2
             action: click
             padding: 5
@@ -94,8 +97,10 @@ contexts:
     - url: http://amberjack-bd.dev/conteudos/2
       steps:
           - description:
-              Por fim, nesta tela é possível visualizar
-              detalhadamente o conteúdo buscado.
+              Por fim, nesta tela e possivel visualizar
+              detalhadamente o conteudo buscado.
             element: content
             padding: 5
             position: tcc
+\end{lstlisting}
+}
